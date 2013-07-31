@@ -94,6 +94,41 @@
                 </section>
                 <section>
                     <section>
+                        <h2>Syntax</h2>
+
+                    </section>
+                    
+                    <section data-markdown>
+## Variables
+
+```smalltalk
+startPoint  "a variable name"
+Transcript  "a global variable name"
+self        "pseudo-variable"
+```
+                    </section>
+                    <section data-markdown>
+## Other Declarations and Expressions
+
+```smalltalk
+| x y |             "declaration of variables x and y"
+x := 1              "assign 1 to x"
+[ x + y ]           "a block that evaluates to x+y"
+&lt;primitive: 1&gt;      "virtual machine primitive or annotation"
+```
+                    </section>
+                    <section data-markdown>
+## Messages
+
+```smalltalk
+3 factorial                 "unary message"
+3+4 binary                  "messages"
+2 raisedTo: 6 modulo: 10    "keyword message"
+```
+                    </section>
+                </section>
+                <section>
+                    <section>
                         <h2>Smalltalk Object Model</h2>
 
                     </section>
