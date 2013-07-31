@@ -93,6 +93,93 @@
                     </section>
                 </section>
                 <section>
+                    <section>
+                        <h2>Smalltalk Object Model</h2>
+
+                    </section>
+                    
+                    <section data-markdown>
+## The Rules
+
+- Rule 1. Everything is an object.
+- Rule 2. Every object is an instance of a class.
+- Rule 3. Every class has a superclass.
+- Rule 4. Everything happens by sending messages.
+- Rule 5. Method lookup follows the inheritance chain.
+
+                    </section>
+                    <section data-markdown>
+## Every object is an instance of a class
+
+```smalltalk
+1 class             "SmallInteger"
+20 factorial class  "LargePositiveInteger"
+'hello' class       "ByteString"
+#(1 2 3) class      "Array"
+(4@5) class         "Point"
+Object new class    "Object"              
+```
+                    </section>
+                    <section data-markdown>
+## The instance side and the class side
+
+```smalltalk
+aColor := Color blue.   "Class side method blue"
+aColor                  "Color blue"
+aColor red              "0.0 Instance side accessor method red"
+aColor blue             "1.0 Instance side accessor method blue"          
+```
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>SUnit</h2>
+
+                    </section>
+                    <section data-markdown>
+## TestCase
+
+```smalltalk
+TestCase subclass: #IntegerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'KernelTests-Numbers'        
+```
+                    </section>                    
+                    <section data-markdown>
+## Test Method
+
+```smalltalk
+testIsPrime
+
+	"The following tests should return 'true'"
+	self assert: 17 isPrime.
+	self assert: 78901 isPrime.
+	self assert: 104729 isPrime.
+	self assert: 15485863 isPrime.
+	self assert: 2038074743 isPrime.
+	self assert: 29996224275833 isPrime.
+	
+	"The following tests should return 'false' (first 5 are Carmichael integers)"
+	self deny: 561 isPrime.
+	self deny: 2821 isPrime.
+	self deny: 6601 isPrime.
+	self deny: 10585 isPrime.
+	self deny: 15841 isPrime.
+	self deny: 256 isPrime.
+	self deny: 29996224275831 isPrime.       
+```
+                    </section>
+                 
+                    <section>
+                        <h2>Test Runner</h2>
+                        <img src='images/testrunner01.jpg' />
+                    </section>
+                </section>
+
+                <section>
                     <h1>THE END</h1>
                     <h3>BY Angel 'Java' Lopez / www.ajlopez.com / @ajlopez</h3>
                 </section>
