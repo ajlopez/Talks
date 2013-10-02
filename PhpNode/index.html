@@ -64,6 +64,21 @@
                     <img src='images/nodecycle01.png' />
                     <a href='http://magnetik.github.com/node-webid-report/'>http://magnetik.github.com/node-webid-report/</a>
                 </section>
+                <section data-markdown>
+## A Web Server
+```js
+ 
+var http = require('http');
+
+http.createServer(function (req, res) {
+	res.writeHeader(200, {'Content-type': 'text/plain'});
+	res.write('Hello ');
+	res.end('World');
+}).listen(8000);
+
+```
+
+                </section>
 				
 				<section>
                     <section>
