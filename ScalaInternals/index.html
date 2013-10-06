@@ -36,7 +36,7 @@
             <!-- Any section element inside of this container is displayed as a slide -->
             <div class="slides">
                 <section>
-                    <h1>Scala Internals</h1>
+                    <h2>Scala Internals</h2>
                     <h3>Looking into implementation</h3>
                     <p>
                         Created by <a href="http://twitter.com/ajlopez">@ajlopez</a>
@@ -102,11 +102,11 @@
                 
                 <section>
                     <section>
-                        <h1>Scala's Roots</h1>
+                        <h2>Scala's Roots</h2>
                     </section>
                     
                     <section>
-                        <h1>From Java (and C#)</h1>
+                        <h2>From Java (and C#)</h2>
                         <ul>
                             <li>Syntax</li>
                             <li>Expressions, statements, blocks as in Java</li>
@@ -118,7 +118,7 @@
                     </section>
                     
                     <section>
-                        <h1>From Other Languages</h1>
+                        <h2>From Other Languages</h2>
                         <ul>
                             <li>Uniform object model from Smalltalk (and then Ruby)</li>
                             <li>Universal nesting from Algol, Simula, ...</li>
@@ -132,27 +132,172 @@
                 </section>
                 
                 <section>
-                    <h2>Objects</h2>
+                    <section>
+                        <h2>Objects</h2>
+                    </section>
+                    <section data-markdown>
+## Hello world
+```scala
+object HelloWorld {
+    def main(args: Array[String]) = {
+        println("Hello, World")
+    }
+}```
+                    </section>
+                    <section data-markdown>
+## Our tools
+```
+scalac HelloWorld.scala
+```
+```
+scalac -print HelloWorld.scala
+```
+```
+scalap HelloWorld
+scalap HelloWorld$
+```
+```
+javap -c HelloWorld
+javap -c HelloWorld$
+```
+                    </section>
                 </section>
 
                 <section>
-                    <h2>Operators as Methods</h2>
+                    <section>
+                        <h2>Operators as Methods</h2>
+                    </section>
+                    <section data-markdown>
+## Integer Factorial
+```scala
+object IntFactorial {
+    def factorial(x: Int): Int = 
+        if (x == 0) 1 else x * factorial(x - 1)
+    
+    def main(args: Array[String]): Unit = 
+        println(factorial(10))
+}
+```                    
+                    </section>
+                    <section data-markdown>
+## Big Integer Factorial
+```scala
+object Factorial {
+    def factorial(x: BigInt): BigInt = 
+        if (x == 0) 1 else x * factorial(x - 1)
+    
+    def main(args: Array[String]): Unit = 
+        println(factorial(30))
+}
+```                    
+                    </section>
                 </section>
 
                 <section>
-                    <h2>Functions as Objects</h2>
+                    <section>
+                        <h2>Functions as Objects</h2>
+                    </section>
+                    <section data-markdown>
+## Timer.scala
+```scala
+object Timer
+{
+  def oncePerSecond(callback: () => Unit): Unit = {
+    while (true)
+    {
+      callback()
+      Thread.sleep(1000)
+    }
+  }
+
+  def timeFlies(): Unit = 
+  { Console.println("Time flies when you're having fun(ctionally)..."); }
+
+  def main(args: Array[String]): Unit = {
+    oncePerSecond(timeFlies)
+  }
+}
+```
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>App</h2>
+                    </section>
+                    <section data-markdown>
+## Our Application
+```scala
+object HelloApp extends App {
+    println("Hello, World")
+}
+```
+Implemented with App.scala, DelayedInit.scala
+                    </section>
+                    <section data-markdown>
+## DelayedInit.scala
+```scala
+trait Helper extends DelayedInit {
+    def delayedInit(body: => Unit) = {
+        println("dummy text, printed before initialization of C")
+        body // evaluates the initialization code of C
+    }
+}
+```
+                    </section>
+                    <section data-markdown>
+## App.scala
+```scala
+private val initCode = new ListBuffer[() => Unit]
+
+override def delayedInit(body: => Unit) {
+    initCode += (() => body)
+}
+def main(args: Array[String]) = {
+    this._args = args
+    for (proc <- initCode) proc()
+    if (util.Properties.propIsSet("scala.time")) {
+        val total = currentTime - executionStart
+        Console.println("[total " + total + "ms]")
+    }
+}
+```
+                    </section>
                 </section>
 
                 <section>
-                    <h2>Argument by Name</h2>
-                </section>
+                    <section>
+                        <h2>Traits</h2>
+                    </section>
+                    <section data-markdown>
+## Defining a Trait
+```scala
+trait Similarity {
+  def isSimilar(x: Any): Boolean
+  def isNotSimilar(x: Any): Boolean = !isSimilar(x)
+}
+```
 
-                <section>
-                    <h2>Lazy Values</h2>
-                </section>
-
-                <section>
-                    <h2>Traits</h2>
+                    </section>
+                    <section data-markdown>
+## Using a Trait
+```scala
+class Point(xc: Int, yc: Int) extends Similarity {
+  var x: Int = xc
+  var y: Int = yc
+  def isSimilar(obj: Any) =
+    obj.isInstanceOf[Point] &&
+    obj.asInstanceOf[Point].x == x
+}
+object TraitsTest extends Application {
+  val p1 = new Point(2, 3)
+  val p2 = new Point(2, 4)
+  val p3 = new Point(3, 3)
+  println(p1.isNotSimilar(p2))
+  println(p1.isNotSimilar(p3))
+  println(p1.isNotSimilar(2))
+}
+```
+                    </section>
                 </section>
 
                 <section>
@@ -168,7 +313,7 @@
                 </section>
 
                 <section>
-                    <h1>THE END</h1>
+                    <h2>THE END</h2>
                     <h3>BY Angel 'Java' Lopez / www.ajlopez.com / @ajlopez</h3>
                 </section>
 
