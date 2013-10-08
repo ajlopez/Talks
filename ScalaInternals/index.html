@@ -305,7 +305,49 @@ object TraitsTest extends Application {
                 </section>
 
                 <section>
-                    <h2>Mailboxes, Actors</h2>
+                    <section>
+                        <h2>Actors</h2>
+                    </section>
+                    <section>
+                        <h2>Actor Traits</h2>
+                        <ul>
+                            <li>Reactor</li>
+                            <li>ReplyReactor</li>
+                            <li>Actor</li>
+                        </ul>
+                    </section>
+                    <section data-markdown>
+## react
+
+In Reactor.scala
+```scala
+// This method never returns 
+protected def react(handler: PartialFunction[Msg, Unit]): Nothing = {
+    synchronized { drainSendBuffer(mailbox) }
+    searchMailbox(mailbox, handler, false)
+    throw Actor.suspendException
+}
+
+// The $actor's behavior is specified by implementing this method.
+def act(): Unit
+```
+                    </section>
+
+                    <section data-markdown>
+## Factory method
+
+In Actor.scala
+```scala
+def actor(body: => Unit): Actor = {
+    val a = new Actor {
+        def act() = body
+        override final val scheduler: IScheduler = parentScheduler
+    }
+    a.start()
+    a
+}
+```
+                    </section>
                 </section>
 
                 <section>
