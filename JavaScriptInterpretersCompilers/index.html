@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>JavaScript, Interpreters and Compilers</title>
+
+        <meta name="description" content="JavaScript, Interpreters and Compilers">
+        <meta name="author" content="Angel 'Java' Lopez">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>JavaScript, Interpreters and Compilers</h1>
+                    <h3>The power of JavaScript, everywhere.</h3>
+                    <h3>Personal experiments.</h3>
+                    <p>
+                        Created by <a href="http://twitter.com/ajlopez">@ajlopez</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/ajlopez/Talks/tree/master/JavaScriptInterpretersCompilers">https://github.com/ajlopez/Talks/tree/master/JavaScriptInterpretersCompilers</a>
+                        <a href="https://github.com/ajlopez">https://github.com/ajlopez</a>
+                    </p>
+                    <p>
+                        <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
+                    </p>
+                </section>
+                
+                <section>
+                    <section>
+                        <h2>JavaScript</h2>
+                        <p>The flexible language</p>
+                    </section>
+                    <section>
+                        <h2>JavaScript is Butter in Your Hands</h2>
+                        <img src="images/butter01.jpg" />
+                    </section>
+                    <section>
+                        <h2>Both Sides</h2>
+                        <img src="images/moebius01.jpg" />
+                        <p>Client and Server</p>
+                    </section>
+                    <section>
+                        <h2>TBD</h2>
+                    </section>
+                </section>
+                
+                <section>
+                    <section>
+                        <h2>Interpreters</h2>
+                        <p>The easy approach</p>
+                    </section>
+                    <section>
+                        <h2>TBD</h2>
+                    </section>
+                </section>
+                
+                <section>
+                    <section>
+                        <h2>Compilers</h2>
+                        <p>Programming languages expressed in JavaScript</p>
+                    </section>
+                    <section>
+                        <h2>TBD</h2>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Things to Explore</h2>
+                </section>
+                
+                <section>
+                    <h1>The End</h1>
+                    <h3>BY Angel 'Java' Lopez / www.ajlopez.com / @ajlopez</h3>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
