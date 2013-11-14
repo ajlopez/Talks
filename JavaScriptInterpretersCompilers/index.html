@@ -76,7 +76,21 @@
                         <p>The easy approach</p>
                     </section>
                     <section>
-                        <h2>TBD</h2>
+                        <h2>How Do Interpreters Work?</h2>
+                        <ul>
+                            <li>Read some source code</li>
+                            <li>Build an AST (Abstract Syntax Tree) by parsing the source code</li>
+                            <li>Evaluate the program by walking over the AST and performing instructions</li>
+                        </ul>
+                        
+                        <p>Source <a href="https://speakerdeck.com/tomstuart/compilers-for-free">Compilers for free</a></p>
+                    </section>
+                    <section data-markdown>
+## AST
+```js
+x = 2; y = x * 3
+```
+![AST](images/ast01.png)
                     </section>
                 </section>
                 
