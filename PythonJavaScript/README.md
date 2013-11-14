@@ -1,8 +1,6 @@
-# Talk PHP and Node.js
+# Talk Python in JavaScript
 
-These are the slides of my Anglish/Spanish presentation, at [PHP Conference Argentina 2013](http://www.phpconference.com.ar/)
-
-http://www.phpconference.com.ar/php-node-js-y-tutti-li-fiocci/
+These are the slides of presentation, at [PyCon Argentina 2013](http://ar.pycon.org/2013)
 
 Open `index.html` file
 
