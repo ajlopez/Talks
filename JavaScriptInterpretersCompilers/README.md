@@ -1,8 +1,4 @@
-# Talk TDD and JavaScrip
-
-These are the slides of my Anglish/Spanish presentation
-
-http://www.phpconference.com.ar/php-node-js-y-tutti-li-fiocci/
+# Talk JavaScript, Interpreters and Compilers
 
 Open `index.html` file
 
