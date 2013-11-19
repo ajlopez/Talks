@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Introduction to Smalltalk</title>
+
+        <meta name="description" content="Smalltalk for Programmers">
+        <meta name="author" content="Angel 'Java' Lopez">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/sky.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Intro to Smalltalk</h1>
+                    <h3>From Programmer to Programmers</h3>
+                    <p>
+                        Created by <a href="http://twitter.com/ajlopez">@ajlopez</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/ajlopez/Talks/SmalltalkIntro">https://github.com/ajlopez/Talks/SmalltalkIntro</a>
+                    </p>
+                    <p>
+                        <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Smalltalk</h2>
+                    <p>
+                        More than a programming language
+                    </p>
+
+                    <aside class="notes">
+                        Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+                    </aside>
+                </section>
+                <section>
+                    <h2>Smalltalk</h2>
+                    <ul>
+                        <li>Object Environment</li>
+                        <li>Objects everywhere</li>
+                        <li>Dynamic language</li>
+                        <li>Many dialects</li>
+                    </ul>
+
+                </section>
+                <section>
+                    <h2>Pharo</h2>
+                    <a href='http://www.pharo-project.org/home'>http://www.pharo-project.org/home</a>
+                    <img src='images/pharo01.jpg' />
+                </section>
+                <section>
+                    <section>
+                        <h2>A Quick Tour</h2>
+
+                    </section>
+                    <section>
+                        <h2>Starting Engines</h2>
+                        <img src='images/pharo02.jpg' />
+                    </section>
+                    <section>
+                        <h2>World Menu / Workspace</h2>
+                        <img src='images/pharo03.jpg' />
+                    </section>
+                    <section>
+                        <h2>Hello World</h2>
+                        <img src='images/pharo04.jpg' />
+                    </section>
+                    <section>
+                        <h2>System Browser</h2>
+                        <img src='images/browser01.jpg' />
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Syntax</h2>
+
+                    </section>
+                    
+                    <section data-markdown>
+## Variables
+
+```smalltalk
+startPoint  "a variable name"
+Transcript  "a global variable name"
+self        "pseudo-variable"
+```
+                    </section>
+                    <section data-markdown>
+## Other Declarations and Expressions
+
+```smalltalk
+| x y |             "declaration of variables x and y"
+x := 1              "assign 1 to x"
+[ x + y ]           "a block that evaluates to x+y"
+&lt;primitive: 1&gt;      "virtual machine primitive or annotation"
+```
+                    </section>
+                    <section data-markdown>
+## Messages
+
+```smalltalk
+3 factorial                 "unary message"
+3+4 binary                  "messages"
+2 raisedTo: 6 modulo: 10    "keyword message"
+```
+                    </section>
+                    <section data-markdown>
+## Blocks
+
+```smalltalk
+[ 1 + 2 ] value "3"
+[ :x | 1 + x ] value: 2 "3"
+[ :x :y | x + y ] value: 1 value: 2 "3"
+[ :x :y | | z | z := x+ y. z ] value: 1 value: 2 "3"
+```
+Closure
+```smalltalk
+| x |
+x := 1.
+[ :y | x + y ] value: 2 "3"        
+```
+                    </section>
+                    <section data-markdown>
+## Conditional and Loops
+
+```smalltalk
+(17 * 13 > 220)
+ifTrue: [ 'bigger' ]
+ifFalse: [ 'smaller' ] "bigger"
+```
+
+```smalltalk
+n := 1.
+[ n < 1000 ] whileTrue: [ n := n*2 ].
+n "1024"        
+```
+
+```smalltalk
+n := 1.
+[ n > 1000 ] whileFalse: [ n := n*2 ].
+n "1024"      
+```
+
+```smalltalk
+n := 1.
+10 timesRepeat: [ n := n*2 ].
+n "1024"     
+```
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Smalltalk Object Model</h2>
+
+                    </section>
+                    
+                    <section data-markdown>
+## The Rules
+
+- Rule 1. Everything is an object.
+- Rule 2. Every object is an instance of a class.
+- Rule 3. Every class has a superclass.
+- Rule 4. Everything happens by sending messages.
+- Rule 5. Method lookup follows the inheritance chain.
+
+                    </section>
+                    <section data-markdown>
+## Every object is an instance of a class
+
+```smalltalk
+1 class             "SmallInteger"
+20 factorial class  "LargePositiveInteger"
+'hello' class       "ByteString"
+#(1 2 3) class      "Array"
+(4@5) class         "Point"
+Object new class    "Object"              
+```
+                    </section>
+                    <section data-markdown>
+## The instance side and the class side
+
+```smalltalk
+aColor := Color blue.   "Class side method blue"
+aColor                  "Color blue"
+aColor red              "0.0 Instance side accessor method red"
+aColor blue             "1.0 Instance side accessor method blue"          
+```
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>SUnit</h2>
+
+                    </section>
+                    
+                    <section data-markdown>
+## TestCase
+
+```smalltalk
+TestCase subclass: #IntegerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'KernelTests-Numbers'        
+```
+                    </section>
+                    
+                    <section data-markdown>
+## Test Method
+
+```smalltalk
+testIsPrime
+
+	"The following tests should return 'true'"
+	self assert: 17 isPrime.
+	self assert: 78901 isPrime.
+	self assert: 104729 isPrime.
+	self assert: 15485863 isPrime.
+	self assert: 2038074743 isPrime.
+	self assert: 29996224275833 isPrime.
+	
+	"The following tests should return 'false' (first 5 are Carmichael integers)"
+	self deny: 561 isPrime.
+	self deny: 2821 isPrime.
+	self deny: 6601 isPrime.
+	self deny: 10585 isPrime.
+	self deny: 15841 isPrime.
+	self deny: 256 isPrime.
+	self deny: 29996224275831 isPrime.       
+```
+                    </section>
+                 
+                    <section>
+                        <h2>Test Runner</h2>
+                        <img src='images/testrunner01.jpg' />
+                    </section>
+                </section>
+                
+                <section>
+                    <section>
+                        <h2>Web Development</h2>
+                    </section>
+                    <section>
+                        <h2>Seaside Web Framework</h2>
+                        <a href="http://www.seaside.st/">http://www.seaside.st/</a>
+                        <img src='images/seaside01.jpg' />
+                    </section>
+                    <section>
+                        <h2>Local server</h2>
+                        <img src='images/seaside02.jpg' />
+                    </section>
+                </section>
+                
+                <section>
+                    <h1>THE END</h1>
+                    <h3>BY Angel 'Java' Lopez / www.ajlopez.com / @ajlopez</h3>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

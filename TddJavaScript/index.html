@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>TDD and JavaScript</title>
+
+        <meta name="description" content="Test-Driven Development and JavaScript">
+        <meta name="author" content="Angel 'Java' Lopez">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>TDD and JavaScript</h1>
+                    <h3>Test-Driven Development using JavaScript</h3>
+                    <p>
+                        Created by <a href="http://twitter.com/ajlopez">@ajlopez</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/ajlopez/Talks/tree/master/TddJavaScript">https://github.com/ajlopez/Talks/tree/master/TddJavaScript</a>
+                        <a href="https://github.com/ajlopez/TddRocks/tree/master/JavaScript">https://github.com/ajlopez/TddRocks/tree/master/JavaScript</a>
+                    </p>
+                    <p>
+                        <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
+                    </p>
+                </section>
+                
+                <section>
+                    <section>
+                        <h2>TDD</h2>
+                        <p>Test-Driven Development</p>
+                    </section>
+                    <section>
+                        <h2>It's Not About Tests</h2>
+                    </section>
+                    <section>
+                        <h2>Répétez avec moi!!!</h2>
+                    </section>
+                    <section>
+                        <h2>IT'S NOT ABOUT TESTS!!!</h2>
+                        <h2>IT'S NOT ABOUT TESTS!!!</h2>
+                        <h2>IT'S NOT ABOUT TESTS!!!</h2>
+                    </section>
+                    <section>
+                        <h2>It's About Development</h2>
+                        <ul>
+                        <li>It's a workflow</li>
+                        <li>Push for simplicity</li>
+                        <li>Tests are use examples</li>
+                        <li>Red, Green, Refactor</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>The Three Laws of TDD</h2>
+                        <p>By <a href="http://twitter.com/unclebobmartin">@unclebobmartin</a></p>
+                        <p><a href="http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd">http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd</a></p>
+                        <ul>
+                        <li>You are not allowed to write any production code unless it is to make a failing unit test pass.</li>
+                        <li>You are not allowed to write any more of a unit test than is sufficient to fail; and compilation failures are failures</li>
+                        <li>You are not allowed to write any more production code than is sufficient to pass the one failing unit test.</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Aligned with</h2>
+                        <ul>
+                        <li>Baby steps</li>
+                        <li>Make it works</li>
+                        <li>Make it right</li>
+                        <li>Make it fast</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Without TDD</h2>
+                        <img src="images/machine01.jpg"/>
+                    </section>
+                    <section>
+                        <h2>With TDD</h2>
+                        <img src="images/napkin01.jpg"/>
+                    </section>
+                    <section>
+                        <h2>Production Code With TDD</h2>
+                        <img src="images/hammock01.jpg"/>
+                    </section>
+                    <section>
+                        <h2>Production Code Without TDD</h2>
+                        <img src="images/hell01.jpg"/>
+                    </section>
+                    <section>
+                        <h2>Pair Programming Bot ;-)</h2>
+                        <a href="http://pairprogrammingbot.com/">http://pairprogrammingbot.com/</a>
+                        <img src="images/progbot01.png"/>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>JavaScript</h2>
+                    </section>
+
+                    <section>
+                        <h2>The Language</h2>
+                        <ul>
+                            <li>Flexible</li>
+                            <li>"Butter" Language ;-)</li>
+                            <li>Module Pattern</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h2>Put the Money where the Mouth is</h2>
+                        <a href="https://coderwall.com/ajlopez">https://coderwall.com/ajlopez</a>
+                        <img src="images/coderwall01.png" />
+                    </section>
+
+                    <section>
+                        <h2>Node.js</h2>
+                        <a href="http://nodejs.org/">http://nodejs.org/</a>
+                        <img src="images/nodejs01.jpg"/>
+                    </section>
+
+                    <section>
+                        <h2>Baby Steps</h2>
+                        <ul>
+                            <li>require('assert')</li>
+                            <li><a href="https://github.com/caolan/nodeunit">npm install nodeunit -g</a></li>
+                            <li><a href="https://github.com/ajlopez/simpleunit">npm install simpleunit -g</a></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Demo Time!</h2>
+                    </section>
+                    
+                    <section>
+                        <h2>QUnit</h2>
+                        <a href="http://qunitjs.com/">http://qunitjs.com/</a>
+                        <img src="images/qunit01.jpg" />
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Things to Explore</h2>
+                </section>
+                
+                <section>
+                    <h1>The End</h1>
+                    <h3>BY Angel 'Java' Lopez / www.ajlopez.com / @ajlopez</h3>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

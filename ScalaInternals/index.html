@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Scala Internals</title>
+
+        <meta name="description" content="Scala Internals">
+        <meta name="author" content="Angel 'Java' Lopez">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/sky.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h2>Scala Internals</h2>
+                    <h3>Looking into implementation</h3>
+                    <p>
+                        Created by <a href="http://twitter.com/ajlopez">@ajlopez</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/ajlopez/Talks/PhpNode">https://github.com/ajlopez/Talks/ScalaInternals</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/ajlopez/ScalaSamples/Simple">https://github.com/ajlopez/ScalaSamples/Simple</a>
+                    </p>
+                    <p>
+                        <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
+                    </p>
+                </section>
+                
+				<section>
+					<section>
+						<h2>Scala</h2>
+					</section>
+					<section>
+						<h2>Scala Language</h2>
+						<ul>
+							<li>Compiles to bytecodes</li>
+							<li>Access to Java ecosystem</li>
+							<li>Functional principles</li>
+							<li>But with object-oriented concepts</li>
+							<li>Developed by Martin Odersky (Pizza, GJ Languages)</li>
+							<li>Scalable</li>
+						</ul>
+					</section>
+					
+					<section>
+						<h2>Why Scala?</h2>
+						<ul>
+							<li>Compatible</li>
+							<li>Concise</li>
+							<li>High Level</li>
+							<li>Statically Typed</li>                        
+							<li>Create highly scalable, concurrent data processors</li>
+							<li>Take advantage of parallel hardware architectures</li>                        
+						</ul>
+					</section>
+					
+					<section>
+						<h2>The Essence of Scala</h2>
+						<ul>
+							<li>Concentrate on scalablity: same constructions for small or large programs</li>
+							<li>Unify object-oriented and functional programming</li>
+						</ul>
+					</section>
+					
+					<section>
+						<h2>Scalable</h2>
+						<ul>
+							<li>For scripting, applications, and enterprise applications</li>
+							<li>New types, ie: BigInt</li>
+							<li>New control structures, ie: Actors</li>
+							<li>Object-oriented</li>
+							<li>Functional</li>
+						</ul>
+					</section>
+				</section>
+                
+                <section>
+                    <section>
+                        <h2>Scala's Roots</h2>
+                    </section>
+                    
+                    <section>
+                        <h2>From Java (and C#)</h2>
+                        <ul>
+                            <li>Syntax</li>
+                            <li>Expressions, statements, blocks as in Java</li>
+                            <li>Classes, packages and imports</li>
+                            <li>Basic types</li>
+                            <li>Class library</li>
+                            <li>Execution model</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h2>From Other Languages</h2>
+                        <ul>
+                            <li>Uniform object model from Smalltalk (and then Ruby)</li>
+                            <li>Universal nesting from Algol, Simula, ...</li>
+                            <li>Uniform access principle for method invocation and field selection from Eiffel</li>
+                            <li>Functional programming from ML family of languages (SML, OCaml, F#...)</li>
+                            <li>Higher-order functions from ML, Haskell</li>
+                            <li>Implicit parameters from Haskell's type classes</li>
+                            <li>Actors inspired by Erlang</li>
+                        </ul>
+                    </section>
+                </section>
+                
+                <section>
+                    <section>
+                        <h2>Objects</h2>
+                    </section>
+                    <section data-markdown>
+## Hello world
+```scala
+object HelloWorld {
+    def main(args: Array[String]) = {
+        println("Hello, World")
+    }
+}```
+                    </section>
+                    <section data-markdown>
+## Our tools
+```
+scalac HelloWorld.scala
+```
+```
+scalac -print HelloWorld.scala
+```
+```
+scalap HelloWorld
+scalap HelloWorld$
+```
+```
+javap -c HelloWorld
+javap -c HelloWorld$
+```
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Operators as Methods</h2>
+                    </section>
+                    <section data-markdown>
+## Integer Factorial
+```scala
+object IntFactorial {
+    def factorial(x: Int): Int = 
+        if (x == 0) 1 else x * factorial(x - 1)
+    
+    def main(args: Array[String]): Unit = 
+        println(factorial(10))
+}
+```                    
+                    </section>
+                    <section data-markdown>
+## Big Integer Factorial
+```scala
+object Factorial {
+    def factorial(x: BigInt): BigInt = 
+        if (x == 0) 1 else x * factorial(x - 1)
+    
+    def main(args: Array[String]): Unit = 
+        println(factorial(30))
+}
+```                    
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Functions as Objects</h2>
+                    </section>
+                    <section data-markdown>
+## Timer.scala
+```scala
+object Timer
+{
+  def oncePerSecond(callback: () => Unit): Unit = {
+    while (true)
+    {
+      callback()
+      Thread.sleep(1000)
+    }
+  }
+
+  def timeFlies(): Unit = 
+  { Console.println("Time flies when you're having fun(ctionally)..."); }
+
+  def main(args: Array[String]): Unit = {
+    oncePerSecond(timeFlies)
+  }
+}
+```
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>App</h2>
+                    </section>
+                    <section data-markdown>
+## Our Application
+```scala
+object HelloApp extends App {
+    println("Hello, World")
+}
+```
+Implemented with App.scala, DelayedInit.scala
+                    </section>
+                    <section data-markdown>
+## DelayedInit.scala
+```scala
+trait Helper extends DelayedInit {
+    def delayedInit(body: => Unit) = {
+        println("dummy text, printed before initialization of C")
+        body // evaluates the initialization code of C
+    }
+}
+```
+                    </section>
+                    <section data-markdown>
+## App.scala
+```scala
+private val initCode = new ListBuffer[() => Unit]
+
+override def delayedInit(body: => Unit) {
+    initCode += (() => body)
+}
+def main(args: Array[String]) = {
+    this._args = args
+    for (proc <- initCode) proc()
+    if (util.Properties.propIsSet("scala.time")) {
+        val total = currentTime - executionStart
+        Console.println("[total " + total + "ms]")
+    }
+}
+```
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Traits</h2>
+                    </section>
+                    <section data-markdown>
+## Defining a Trait
+```scala
+trait Similarity {
+  def isSimilar(x: Any): Boolean
+  def isNotSimilar(x: Any): Boolean = !isSimilar(x)
+}
+```
+
+                    </section>
+                    <section data-markdown>
+## Using a Trait
+```scala
+class Point(xc: Int, yc: Int) extends Similarity {
+  var x: Int = xc
+  var y: Int = yc
+  def isSimilar(obj: Any) =
+    obj.isInstanceOf[Point] &&
+    obj.asInstanceOf[Point].x == x
+}
+object TraitsTest extends Application {
+  val p1 = new Point(2, 3)
+  val p2 = new Point(2, 4)
+  val p3 = new Point(3, 3)
+  println(p1.isNotSimilar(p2))
+  println(p1.isNotSimilar(p3))
+  println(p1.isNotSimilar(2))
+}
+```
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Actors</h2>
+                    </section>
+                    <section>
+                        <h2>Actor Traits</h2>
+                        <ul>
+                            <li>Reactor</li>
+                            <li>ReplyReactor</li>
+                            <li>Actor</li>
+                        </ul>
+                    </section>
+                    <section data-markdown>
+## react
+
+In Reactor.scala
+```scala
+// This method never returns 
+protected def react(handler: PartialFunction[Msg, Unit]): Nothing = {
+    synchronized { drainSendBuffer(mailbox) }
+    searchMailbox(mailbox, handler, false)
+    throw Actor.suspendException
+}
+
+// The $actor's behavior is specified by implementing this method.
+def act(): Unit
+```
+                    </section>
+
+                    <section data-markdown>
+## Factory method
+
+In Actor.scala
+```scala
+def actor(body: => Unit): Actor = {
+    val a = new Actor {
+        def act() = body
+        override final val scheduler: IScheduler = parentScheduler
+    }
+    a.start()
+    a
+}
+```
+                    </section>
+                </section>
+
+                <section>
+                    <h2>THE END</h2>
+                    <h3>BY Angel 'Java' Lopez / www.ajlopez.com / @ajlopez</h3>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
