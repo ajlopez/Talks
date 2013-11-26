@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>JavaScript, Interpreters and Compilers</title>
+        <title>Implementing Ruby</title>
 
         <meta name="description" content="JavaScript, Interpreters and Compilers">
         <meta name="author" content="Angel 'Java' Lopez">
@@ -36,15 +36,14 @@
             <!-- Any section element inside of this container is displayed as a slide -->
             <div class="slides">
                 <section>
-                    <h1>JavaScript, Interpreters and Compilers</h1>
-                    <h3>The power of JavaScript, everywhere.</h3>
+                    <h1>Implementing Ruby</h1>
                     <h3>Personal experiments.</h3>
                     <p>
                         Created by <a href="http://twitter.com/ajlopez">@ajlopez</a>
                     </p>
                     <p>
-                        <a href="https://github.com/ajlopez/Talks/tree/master/JavaScriptInterpretersCompilers">https://github.com/ajlopez/Talks/tree/master/JavaScriptInterpretersCompilers</a>
-                        <a href="https://github.com/ajlopez">https://github.com/ajlopez</a>
+                        <a href="https://github.com/ajlopez/Talks/tree/master/ImplementingRuby">https://github.com/ajlopez/Talks/tree/master/ImplementingRuby</a>
+                        <a href="https://github.com/ajlopez/RubySharp">https://github.com/ajlopez/RubySharp</a>
                     </p>
                     <p>
                         <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
@@ -53,22 +52,8 @@
                 
                 <section>
                     <section>
-                        <h2>JavaScript</h2>
-                        <p>The flexible language</p>
-                    </section>
-                    <section>
-                        <h2>JavaScript is Butter in Your Hands</h2>
-                        <img src="images/butter01.jpg" />
-                    </section>
-                    <section>
-                        <h2>Both Sides</h2>
-                        <img src="images/moebius01.jpg" />
-                        <p>Client and Server</p>
-                    </section>
-                    <section>
-                        <h2>Programming Languages in JavaScript</h2>
-                        <img src="images/langjs01.png"/>
-                        <a href="https://github.com/jashkenas/coffee-script/wiki/List-of-languages-that-compile-to-JS">List of languages that compile to JS</a>
+                        <h2>Ruby</h2>
+                        <p>A dynamic language</p>
                     </section>
                 </section>
                 
@@ -89,15 +74,10 @@
                     </section>
                     <section data-markdown>
 ## AST
-```js
+```ruby
 x = 2; y = x * 3
 ```
 ![AST](images/ast01.png)
-                    </section>
-                    <section>
-                        <h2>Examples</h2>
-                        <a href="https://github.com/ajlopez/AjLispJs">https://github.com/ajlopez/AjLispJs</a>
-                        <a href="https://github.com/ajlopez/AjLogoJs">https://github.com/ajlopez/AjLogoJs</a>
                     </section>
                 </section>
                 
@@ -117,77 +97,24 @@ x = 2; y = x * 3
                         <a href="https://speakerdeck.com/tomstuart/compilers-for-free">Compilers for free</a>
                     </section>
                     <section data-markdown>
-## Expressions
-```js
-function DottedExpression(left, right) {
-    this.compile = function () {
-        return left.compile() + '.' + right.compile();
-    }
-}
-
-function BinaryExpression(oper, left, right) {
-    this.compile = function () {
-        return left.compile() + ' ' + oper + ' ' + right.compile();
-    }
-}
-```                  
-                    </section>
-                    <section data-markdown>
-## Commands
-```js
-function AssertCommand(expr) {
-    this.compile = function (options) {
-        var code = "if (__debug__ && !(" + expr.compile(options) + ")) { throw 'assert error' }";
-        return code;
-    }
-}
-
-function RaiseCommand(expr) {
-    this.compile = function (options) {
-        var code = "throw " + expr.compile(options) + ";";
-        return code;
-    }
-}
-```                  
-                    </section>
-                    <section data-markdown>
-## TDD as usual ;-)
-```js
-exports['Compile return command'] = function (test) {
-    test.equal(compileCommand(test, 'return 1'), 'return 1;');
-}
-
-exports['Compile call expressions'] = function (test) {
-    test.equal(compileExpression(test, 'print()'), 'print()');
-    test.equal(compileExpression(test, 'print(1)'), 'print(1)');
-}
-
-exports['Compile call command'] = function (test) {
-    test.equal(compileCommand(test, 'print()'), 'print();');
-    test.equal(compileCommand(test, 'print(1)'), 'print(1);');
-}
-```                  
-
-                    </section>
-                    <section data-markdown>
 ## Virtual Machine, Bytecodes
 ```js
 x = 2; y = x * 3
 ```
 ![AST](images/bc01.png)
                     </section>
+                </section>
+
+                <section>
                     <section>
-                        <h2>Examples</h2>
-                        <a href="https://github.com/ajlopez/JPyScript">https://github.com/ajlopez/JPyScript</a>
-                        <a href="https://github.com/ajlopez/AjTalkJs">https://github.com/ajlopez/AjTalkJs</a>
+                        <h2>An Implementation</h2>
+                        <p>Ruby in C#</p>
                     </section>
                 </section>
 
                 <section>
                     <h2>Things to Explore</h2>
-                    <a href="https://github.com/ajlopez/SimpleGrammar">https://github.com/ajlopez/SimpleGrammar</a>
-                    <a href="http://www.sitepoint.com/javascript-beyond-web/">JavaScript beyond web</a>                    
-                    <a href="http://www.voodootikigod.com/nodebots-the-rise-of-js-robotics/">NodeBots - the Rise of JS Robotics</a>
+                    <a href="https://github.com/ajlopez/RuScript">https://github.com/ajlopez/RuScript</a>
                 </section>
                 
                 <section>
