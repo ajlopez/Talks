@@ -180,6 +180,31 @@ x = 2; y = x * 3
                         <p>Put your money where your mouth is!</p>
                         <img src="images/tdd01.png" />
                     </section>
+                    <section data-markdown>
+## Bootstrap
+```csharp
+public Machine()
+{
+    this.requirepaths.Add(".");
+    var basicobjectclass = new DynamicClass("BasicObject", null);
+    var objectclass = new ModuleObject("Object", basicobjectclass);
+    var moduleclass = new ModuleClass(objectclass);
+    var classclass = new ClassClass(moduleclass, objectclass);
+
+    this.rootcontext.SetLocalValue("BasicObject", basicobjectclass);
+    this.rootcontext.SetLocalValue("Object", objectclass);
+    this.rootcontext.SetLocalValue("Module", moduleclass);
+    this.rootcontext.SetLocalValue("Class", classclass);
+
+    basicobjectclass.SetClass(classclass);
+    objectclass.SetClass(classclass);
+    moduleclass.SetClass(classclass);
+    classclass.SetClass(classclass);
+// ...
+```
+To be SIMPLIFIED!!
+                        
+                    </section>
                 </section>
 
                 <section>
