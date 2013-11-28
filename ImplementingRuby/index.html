@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Implementing Ruby</title>
+
+        <meta name="description" content="JavaScript, Interpreters and Compilers">
+        <meta name="author" content="Angel 'Java' Lopez">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Implementing Ruby</h1>
+                    <h3>Personal experiments.</h3>
+                    <p>
+                        Created by <a href="http://twitter.com/ajlopez">@ajlopez</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/ajlopez/Talks/tree/master/ImplementingRuby">https://github.com/ajlopez/Talks/tree/master/ImplementingRuby</a>
+                        <a href="https://github.com/ajlopez/RubySharp">https://github.com/ajlopez/RubySharp</a>
+                    </p>
+                    <p>
+                        <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
+                    </p>
+                </section>
+                
+                <section>
+                    <section>
+                        <h2>Ruby</h2>
+                        <p>A dynamic language</p>
+                        <ul>
+                            <li>Smalltalk Influence</li>
+                            <li>Also Python, Perl, Lisp, ... </li>
+                            <li>Dynamic Type System</li>
+                            <li>Memory Management</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Only one Ruby?</h2>
+                        <ul>
+                            <li>Ruby</li>
+                            <li>JRuby</li>
+                            <li>IronRuby</li>
+                            <li>Rubinius</li>
+                            <li>MacRuby</li>
+                            <li>HotRuby</li>
+                            <li>mruby</li>
+                            <li>...</li>    
+                        </ul>
+                    </section>
+                </section>
+                
+                <section>
+                    <section>
+                        <h2>Interpreters</h2>
+                        <p>The easy approach</p>
+                    </section>
+                    <section>
+                        <h2>How Do Interpreters Work?</h2>
+                        <ul>
+                            <li>Read some source code</li>
+                            <li>Build an AST (Abstract Syntax Tree) by parsing the source code</li>
+                            <li>Evaluate the program by walking over the AST and performing instructions</li>
+                        </ul>
+                        
+                        <a href="https://speakerdeck.com/tomstuart/compilers-for-free">Compilers for free</a>
+                    </section>
+                    <section data-markdown>
+## AST
+```ruby
+x = 2; y = x * 3
+```
+![AST](images/ast01.png)
+                    </section>
+                    <section>
+                        <h2>MRI</h2>
+                        <ul>
+                            <li>Matz's Ruby Interpreter</li>
+                            <li>Also called CRuby</li>
+                            <li>de facto reference</li>
+                        </ul>
+                    </section>
+                </section>
+                
+                <section>
+                    <section>
+                        <h2>Compilers</h2>
+                    </section>
+                    <section>
+                        <h2>How Do Compilers Work?</h2>
+                        <ul>
+                            <li>Read some source code</li>
+                            <li>Build an AST by parsing the source code</li>
+                            <li>Generate target code by walking the AST and emitting instructions</li>
+                        </ul>
+                        
+                        <a href="https://speakerdeck.com/tomstuart/compilers-for-free">Compilers for free</a>
+                    </section>
+                    <section data-markdown>
+## Virtual Machine, Bytecodes
+```js
+x = 2; y = x * 3
+```
+![AST](images/bc01.png)
+                    </section>
+                    <section>
+                        <h2>YARV</h2>
+                        <ul>
+                            <li>YARV (Yet another Ruby VM)</li>
+                            <li>The official Ruby implementation for Ruby 1.9</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Rubinius</h2>
+                        <a href="http://rubini.us/">http://rubini.us/</a>
+                        <ul>
+                            <li>Designed for concurrency</li>
+                            <li>Native threads to run Ruby code on all the CPU cores</li>
+                            <li>LLVM-based just-in-time (JIT) native machine code compiler</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>An Implementation</h2>
+                        <p>Ruby in C#</p>
+                    </section>
+                    <section>
+                        <h2>Challenges</h2>
+                        <ul>
+                            <li>Modules and Classes</li>
+                            <li>Class Hierarchy</li>
+                            <li>Namespaces</li>
+                            <li>Singleton Classes</li>
+                            <li>Garbage Collector</li>
+                            <li>Load .Dlls</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Lexer and Parser</h2>
+                        <img src="images/compiler01.png" />
+                    </section>
+                    <section>
+                        <h2>Everything is a Value</h2>
+                        <img src="images/expr01.png" />
+                    </section>
+                    <section>
+                        <h2>To be evaluated in Context</h2>
+                        <img src="images/context01.png" />
+                    </section>
+                    <section>
+                        <h2>Test-Driven Development</h2>
+                        <p>Put your money where your mouth is!</p>
+                        <img src="images/tdd01.png" />
+                    </section>
+                    <section data-markdown>
+## Bootstrap
+```csharp
+public Machine()
+{
+    this.requirepaths.Add(".");
+    var basicobjectclass = new DynamicClass("BasicObject", null);
+    var objectclass = new ModuleObject("Object", basicobjectclass);
+    var moduleclass = new ModuleClass(objectclass);
+    var classclass = new ClassClass(moduleclass, objectclass);
+
+    this.rootcontext.SetLocalValue("BasicObject", basicobjectclass);
+    this.rootcontext.SetLocalValue("Object", objectclass);
+    this.rootcontext.SetLocalValue("Module", moduleclass);
+    this.rootcontext.SetLocalValue("Class", classclass);
+
+    basicobjectclass.SetClass(classclass);
+    objectclass.SetClass(classclass);
+    moduleclass.SetClass(classclass);
+    classclass.SetClass(classclass);
+// ...
+```
+To be SIMPLIFIED!!
+                        
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Things to Explore</h2>
+                    <a href="https://github.com/ajlopez/RuScript">https://github.com/ajlopez/RuScript</a>
+                </section>
+                
+                <section>
+                    <h1>The End</h1>
+                    <h3>BY Angel 'Java' Lopez / www.ajlopez.com / @ajlopez</h3>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
