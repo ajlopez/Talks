@@ -42,12 +42,18 @@
                         Created by <a href="http://twitter.com/ajlopez">@ajlopez</a>
                     </p>
                     <p>
-                        <a href="https://github.com/ajlopez/Talks/PhpNode">https://github.com/ajlopez/Talks/PhpNode</a>
+                        <a href="https://github.com/ajlopez/Talks/NodeIntro">https://github.com/ajlopez/Talks/NodeIntro</a>
                     </p>
                     <p>
                         <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
                     </p>
                 </section>
+                    <section>
+                        <h2>The next big thing!!</h2>
+                        <h3>since sliced bread</h3>
+                        <img src='images/slicedbread01.png' />
+                        <a href='http://www.toaster.org/slicingbread.html'>http://www.toaster.org/slicingbread.html</a>
+                    </section>
                 
                 <section>
                     <h2>Agenda</h2>
@@ -104,6 +110,44 @@ http.createServer(function (req, res) {
                 <section>
                     <h2>Vibrant Community</h2>
                     <img src='images/nodecomm01.jpg' />
+                </section>
+
+                <section>
+                    <section>
+                        <h2>NPM</h2>
+                        <a href="https://www.npmjs.org/">https://www.npmjs.org/</a>
+                        <img src='images/npm01.png'/>
+                    </section>
+                    <section>
+                        <h2>NPM</h2>
+                        <ul>
+                            <li>Node Package Manager</li>
+                            <li>Description in package.json</li>
+                            <li>Install packages in node_package local folder</li>
+                            <li>Tree structure</li>
+                            <li>Local vs Global install</li>
+                        </ul>
+                    </section>
+                    <section data-markdown>
+## package.json
+```json
+{
+    "name": "wine-cellar",
+    "description": "Wine Cellar Application",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "express": "3.x",
+        "mongodb": "1.1.8",
+        "socket.io": "0.9.x"
+    },
+    "engines": {
+        "node": "0.8.4",
+        "npm": "1.1.49"
+    }
+}
+```
+                    </section>
                 </section>
 
                 <section>
