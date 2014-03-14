@@ -190,6 +190,21 @@
                             <li>An actor can create other actors</li>
                         </ul>
                     </section>
+                    <section data-markdown>
+## System and Actors
+```js
+// System
+
+var webcrawler = node.create('webcrawler');
+
+// Actors
+
+var downloaderref = webcrawler.actorOf(downloader, 'downloader', { router: true });
+var resolverref = webcrawler.actorOf(resolver, 'resolver');
+var harvesterref = webcrawler.actorOf(harvester, 'harvester');
+var serverref = webcrawler.actorOf(server, 'server');
+```
+                    </section>
                     <section>
                         <h2>Spouts and Bolts a la Storm</h2>
                         <a href="http://storm.incubator.apache.org/">Storm (Java Project)</a>
