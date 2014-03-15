@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Distributed Applications and Node.js</title>
+
+        <meta name="description" content="Distributed Applications and Node.js">
+        <meta name="author" content="Angel 'Java' Lopez">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Distributed Applications and Node.js</h1>
+                    <h3>"My name is Legion; for we are many"</h3>
+                    <p>
+                        Created by <a href="http://twitter.com/ajlopez">@ajlopez</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/ajlopez/Talks/NodeDistributedApps">https://github.com/ajlopez/Talks/NodeDistributedApps</a>
+                    </p>
+                    <p>
+                        <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>I am so old...</h2>
+                    <img src="images/years01.jpg" />
+                    <a href='http://ajlopez.wordpress.com/2008/12/30/thirty-years-of-software-development/'>http://ajlopez.wordpress.com/2008/12/30/thirty-years-of-software-development/</a>
+                </section>
+                
+                <section>
+                    <h2>JavaScript is Butter in Your Hands</h2>
+                    <img src="images/butter01.jpg" />
+                </section>
+
+                <section>
+                    <h2>Node.js: The next big thing!!</h2>
+                    <h3>since sliced bread</h3>
+                    <img src='images/slicedbread01.jpg' />
+                    <a href='http://www.toaster.org/slicingbread.html'>http://www.toaster.org/slicingbread.html</a>
+                </section>
+
+                <section>
+                    <h2>Skynet Will Be A Node.js Distributed Application</h2>
+                    <img src='images/skynet01.jpg' />
+                    <a href='http://terminator.wikia.com/wiki/Skynet'>http://terminator.wikia.com/wiki/Skynet</a>
+                </section>
+                
+                <section>
+                    <h2>Agenda</h2>
+                    <ul>
+                        <li>Distributed Applications</li>
+                        <li>Node.js features for distributed applications</li>
+                        <li>Implementation blocks
+                            <ul>
+                            <li>Messaging</li>
+                            <li>RPC</li>
+                            <li>Broadcast</li>
+                            <li>Bus</li>
+                            <li>...</li>
+                            </ul>
+                        </li>
+                        <li>Experiments</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Some Notes</h2>
+                    </section>
+                    <section>
+                        <h2>Alan Kay</h2>
+                        <img src="images/alankay01.png" align="left" />
+                        <a href="http://mythz.servicestack.net/blog/2013/02/27/the-deep-insights-of-alan-kay/
+">The deep insights of Alan Kay</a>
+                        <div>
+"I thought of objects being like biological cells and/or individual computers on a network, only able to communicate with messages"                      
+                        </div>
+                        <h3>
+                        The big idea is messaging</h3>
+                    </section>
+                    <section>
+                        <h2>Richard Feynman</h2>
+                        <img src="images/feynman01.png" align="left" />
+                        <div>
+"If you can't explain it, you don't really understand it."
+"What I cannot create, I do not understand."
+                        </div>
+                        <h3>Try yourself</h3>
+                    </section>
+                    <section>
+                        <h2>Michael Faraday</h2>
+                        <img src="images/faraday01.png" align="left" />
+                        <div>
+"But still try, for who knows what is possible..."
+                        </div>
+                        <h3>Do experiments</h3>
+                    </section>
+                    <section>
+                        <h2>So, Bring me a Brain, Igor!</h2>
+                        <img src="images/frankie01.jpg" />
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Distributed Applications</h2>
+                        <img src="images/distrapp01.png"/>
+                    </section>
+                    <section>
+                        <h2>Questions</h2>
+                        <ul>
+                            <li class='fragment'>Elements that produce messages?</li>
+                            <li class='fragment'>Elements that consume messages?</li>
+                            <li class='fragment'>A message is consumed by only one element?</li>
+                            <li class='fragment'>Or by many elements?</li>
+                            <li class='fragment'>A message is consumed locally or remotely?</li>
+                            <li class='fragment'>How to send a message to other process/machine?</li>
+                            <li class='fragment'>How to select the remote element?</li>
+                            <li class='fragment'>Nodes can be added/removed dinamically?</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>A Typical Sample: Web Crawler</h2>
+                        <div>The logical elements can reside in multiple nodes</div>
+                        <img src="images/webcrawler01.png"/>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>The Elements</h2>
+                    </section>
+                    <section>
+                        <h2>ObjectStream</h2>
+                        <a href="https://github.com/ajlopez/ObjectStream">https://github.com/ajlopez/ObjectStream</a>
+                        <img src="images/objectstream01.png"/>
+                        <div>Object to JSON and JSON to Object</div>
+                    </section>
+                    <section>
+                        <h2>SimpleMessages</h2>
+                        <a href="https://github.com/ajlopez/SimpleMessages">https://github.com/ajlopez/SimpleMessages</a>
+                        <img src="images/simplemessages01.png"/>
+                        <div>Bidirectional Message Channels</div>
+                    </section>
+                    <section>
+                        <h2>SimpleRemote</h2>
+                        <a href="https://github.com/ajlopez/SimpleRemote">https://github.com/ajlopez/SimpleRemote</a>
+                        <img src="images/simpleremote01.png"/>
+                        <div>Remote Objects with Callbacks</div>
+                    </section>
+                    <section>
+                        <h2>SimpleQueue</h2>
+                        <a href="https://github.com/ajlopez/SimpleQueue">https://github.com/ajlopez/SimpleQueue</a>
+                        <img src="images/simplequeue01.png"/>
+                        <div>In-memory in-process queues</div>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>The Frameworks</h2>
+                    </section>
+                    <section>
+                        <h2>Distributed Actors a la Akka</h2>
+                        <a href="https://github.com/ajlopez/SimpleActors">https://github.com/ajlopez/SimpleActors</a>
+                        <div>
+                        <img src="images/simpleactors01.png"/>
+                        </div>
+                        <ul>
+                            <li>Inspired by Akka (Java/Scala)</li>
+                            <li>Each node has an actor tree</li>
+                            <li>Each actor can be references by address (host@name/name)</li>
+                            <li>An actor can create other actors</li>
+                        </ul>
+                    </section>
+                    <section data-markdown>
+## System and Actors
+```js
+// System
+
+var webcrawler = node.create('webcrawler');
+
+// Actors
+
+var downloaderref = webcrawler.actorOf(downloader, 'downloader', { router: true });
+var resolverref = webcrawler.actorOf(resolver, 'resolver');
+var harvesterref = webcrawler.actorOf(harvester, 'harvester');
+var serverref = webcrawler.actorOf(server, 'server');
+```
+                    </section>
+                    <section>
+                        <h2>Spouts and Bolts a la Storm</h2>
+                        <a href="http://storm.incubator.apache.org/">Storm (Java Project)</a>
+                        <div>
+                        <img src="images/storm01.png"/>
+                        </div>
+                        <ul>
+                            <li>A spout is a source of streams in a computation</li>
+                            <li>A bolt processes any number of input streams and produces any number of new output streams</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Storm in Node</h2>
+                        <a href="https://github.com/ajlopez/SimpleStorm">https://github.com/ajlopez/SimpleStorm</a>
+                        <div>
+                        <img src="images/simplestorm01.png"/>
+                        </div>
+                        <ul>
+                            <li>Topology by Node</li>
+                            <li>Inter-node Communication using Queues</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Publish and Subscribe</h2>
+                        <a href="https://github.com/ajlopez/SimpleBus">https://github.com/ajlopez/SimpleBus</a>
+                        <div>
+                        <img src="images/simplebus01.png"/>
+                        </div>
+                        <ul>
+                            <li>Publishers and Subscribers</li>
+                            <li>A message can be received by many targets</li>
+                            <li>Selective subscription (using a filter)</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Fabriq in Node</h2>
+                        <div><a href="http://ajlopez.wordpress.com/2007/10/15/remember-fabriq/">Original Fabriq</a> by <a href="http://twitter.com/asehmi">@asehmi</a></div>
+                        <a href="https://github.com/ajlopez/AjFabriqNode">https://github.com/ajlopez/AjFabriqNode</a>
+                        <div>
+                        <img src="images/ajfabriq01.png"/>
+                        </div>
+                        <ul>
+                            <li>Each node has message processors</li>
+                            <li>Routing of message based on content</li>
+                            <li>Each node has its own message processors</li>
+                        </ul>
+                    </section>
+                </section>
+                
+                <section>
+                    <section>
+                        <h2>Demo Experiments</h2>
+                    </section>
+                    <section>
+                        <h2>Distributed Genetic Algorithms</h2>
+                        <div>
+                        <img src="images/tsp01.png"/>
+                        </div>
+                        <a href="https://github.com/ajlopez/SimpleGA">https://github.com/ajlopez/SimpleGA</a>
+                    </section>
+                    <section>
+                        <h2>Distributed Fractal</h2>
+                        <div>
+                        <img src="images/fractal01.png"/>
+                        </div>
+                        <a href="https://github.com/ajlopez/NodeSamples/Fractal">https://github.com/ajlopez/NodeSamples/FractalSimpleGA</a>                    
+                    </section>
+                    <section>
+                        <h2>Distributed Backgammon (WIP)</h2>
+                        <div>
+                        <img src="images/gammon01.jpg"/>
+                        </div>
+                        <a href="https://github.com/ajlopez/SimpleGammon">https://github.com/ajlopez/SimpleGammon</a>
+                    </section>
+                </section>
+                <section>
+                    <h2>Brain and Body</h2>
+                    <img src="images/brainbody01.jpg"/>
+                </section>
+
+                <section>
+                    <h2>Try and take over the world!!</h2>
+                    <img src="images/pinky01.jpg"/>
+                </section>
+                
+                <section>
+                    <h1>The End?</h1>
+                    <img src='images/terminator01.jpg' />
+                    <h3>BY Angel 'Java' Lopez / @ajlopez</h3>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
