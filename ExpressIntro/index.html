@@ -101,9 +101,6 @@ http.createServer(function (req, res) {
 
 ```
                     </section>
-                </section>
-				
-                <section>
                     <section>
                         <h2>NPM</h2>
                         <a href="https://www.npmjs.org/">https://www.npmjs.org/</a>
@@ -119,28 +116,8 @@ http.createServer(function (req, res) {
                             <li>Local vs Global install</li>
                         </ul>
                     </section>
-                    <section data-markdown>
-## package.json
-```json
-{
-    "name": "wine-cellar",
-    "description": "Wine Cellar Application",
-    "version": "0.0.1",
-    "private": true,
-    "dependencies": {
-        "express": "3.x",
-        "mongodb": "1.1.8",
-        "socket.io": "0.9.x"
-    },
-    "engines": {
-        "node": "0.8.4",
-        "npm": "1.1.49"
-    }
-}
-```
-                    </section>
                 </section>
-
+				
                 <section>
                     <section>
                         <h2>Express</h2>
@@ -156,6 +133,139 @@ http.createServer(function (req, res) {
                             <li>Middleware</li>
                             <li>MVC routing and views</li>
                         </ul>
+                    </section>
+                    <section data-markdown>
+## Minimal package.json
+```json
+{
+  "name": "hello-world",
+  "description": "hello world test app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "4.x"
+  }
+}
+```
+Then
+```
+npm install
+```
+                    </section>
+                    <section data-markdown>
+## Server Code
+app.js
+```js
+var express = require('express');
+var app = express();
+
+app.get('/hello.txt', function(req, res){
+  res.send('Hello World');
+});
+
+var server = app.listen(3000, function() {
+    console.log('Listening on port %d', server.address().port);
+});
+```
+
+Then
+```
+node app
+```
+Then
+```
+http://localhost:3000/hello.txt
+```
+                    </section>
+                    <section data-markdown>
+## Middleware
+```js
+ 
+app.use(function (req, res, next) {
+    // ...
+});
+
+```
+Example
+```js
+app.use('/api', function(req, res, next){
+  var key = req.query['api-key'];
+
+  // key isnt present
+  if (!key) return next(error(400, 'api key required'));
+
+  // key is invalid
+  if (!~apiKeys.indexOf(key)) return next(error(401, 'invalid api key'));
+
+  // all good, store req.key for route access
+  req.key = key;
+  next();
+});
+```
+                    </section>
+                    <section data-markdown>
+## Router
+A router module sample
+```js 
+var express = require('express');
+var router = express.Router();
+router.get('/', controller.index);
+router.get('/new', controller.create);
+router.post('/new', controller.insert);
+router.get('/:id', controller.view);
+router.get('/:id/edit', controller.edit);
+router.post('/:id/edit', controller.update);
+router.get('/:id/remove', controller.remove);
+
+module.exports = router;
+```
+
+Usage
+```js 
+app.use('/customer', customerrouter);
+
+```
+                    </section>
+                    <section data-markdown>
+## Action in Controller
+```js 
+function index(req, res) {
+    repository.findAll(function (err, items) {
+        if (err)
+            res.render('error', { error: err });
+        else
+            res.render('customerlist', { title: 'Customers', items: items });
+    });
+}
+```
+                    </section>
+                    <section data-markdown>
+## View (in ejs)
+```html
+&lt;% include header %&gt;
+
+&lt;div class=&quot;row btn-group&quot;&gt;
+&lt;a class=&quot;btn btn-primary&quot; href=&quot;/customers/new&quot;&gt;New Customer...&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;row&quot;&gt;
+&lt;table class=&quot;table-striped table-bordered&quot;&gt;
+    &lt;tr&gt;
+        &lt;th&gt;&amp;nbsp;&lt;/th&gt;
+        &lt;th&gt;Name&lt;/th&gt;
+        &lt;th&gt;Address&lt;/th&gt;
+    &lt;/tr&gt;
+&lt;% items.forEach(function (item) { %&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;a href=&quot;/customers/&lt;%= item._id %&gt;&quot;&gt;View...&lt;/a&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= item.name %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= item.address %&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;% }); %&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;% include footer %&gt;
+```
                     </section>
                 </section>
 
