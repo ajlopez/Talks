@@ -308,27 +308,18 @@ function index(req, res) {
 ```
                     </section>
                     <section data-markdown>
-## Returnin JSON
+## Returning JSON
 ```js 
+function getTeam(req, res) {
+    var id = getId(req.params.id);
+    service.getTeam(id, function (err, items) {
+        res.send(items);
+    });
+}
 ```
                     </section>
                 </section>
 
-                <section>
-                    <section>
-                        <h2>Node Cellar</h2>
-                        <img src="images/nodecellar01.jpg" />
-                    </section>
-                    <section>
-                        <h2>More info</h2>
-                        <ul>
-                            <li><a href="https://github.com/ccoenraets/nodecellar">https://github.com/ccoenraets/nodecellar</a></li>
-                            <li><a href="http://coenraets.org/blog/2011/12/restful-services-with-jquery-php-and-the-slim-framework/">RESTful services with jQuery, PHP and the Slim Framework</a></li>
-                            <li><a href="https://github.com/ccoenraets/wine-cellar-php">https://github.com/ccoenraets/wine-cellar-php</a></li>
-                        </ul>
-                    </section>
-                </section>
-                
                 <section>
                     <section>
                         <h2>Resources</h2>
@@ -338,6 +329,9 @@ function index(req, res) {
                         <a href="https://github.com/strongloop/express">https://github.com/strongloop/express</a>
                         <a href="https://github.com/ajlopez/ExpressSamples">https://github.com/ajlopez/ExpressSamples</a>
                         <a href="https://github.com/liquid-co-ops/liqueed">https://github.com/liquid-co-ops/liqueed</a>
+                        <a href="https://github.com/ccoenraets/nodecellar">https://github.com/ccoenraets/nodecellar</a>
+                        <a href="http://coenraets.org/blog/2011/12/restful-services-with-jquery-php-and-the-slim-framework/">RESTful services with jQuery, PHP and the Slim Framework</a>
+                        <a href="https://github.com/ccoenraets/wine-cellar-php">https://github.com/ccoenraets/wine-cellar-php</a>
                     </section>
                     <section>
                         <h2>Boilerplates</h2>
@@ -350,6 +344,7 @@ function index(req, res) {
                         <a href="http://krakenjs.com/">http://krakenjs.com/</a>
                         <a href="https://github.com/node-red/node-red">https://github.com/node-red/node-red</a>
                         <a href="http://www.infoq.com/presentations/ibm-node-red">IBM Node Red</a>
+                        <a href="http://koajs.com/">KoaJS</a>
                     </section>
                 </section>
                 
