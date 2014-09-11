@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Intro to Express 4.x</title>
+
+        <meta name="description" content="Intro to Express 4.x">
+        <meta name="author" content="Angel 'Java' Lopez">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Intro to Express 4.x</h1>
+                    <h3>A Node.js Web Framework</h3>
+                    <p>
+                        Created by <a href="http://twitter.com/ajlopez">@ajlopez</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/ajlopez/Talks/ExpressIntro">https://github.com/ajlopez/Talks/ExpressIntro</a>
+                    </p>
+                    <p>
+                        <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>JavaScript Everywhere, The next big thing!!</h2>
+                    <h3>since sliced bread</h3>
+                    <img src='images/slicedbread01.png' />
+                    <a href='http://www.toaster.org/slicingbread.html'>http://www.toaster.org/slicingbread.html</a>
+                </section>
+                
+                <section>
+                    <h2>Agenda</h2>
+                    <ul>
+                        <li>Web Development with Node.js</li>
+                        <li>Express and Middleware</li>
+                        <li>Express Generator</li>
+                        <li>Router</li>
+                        <li>Controllers</li>
+                        <li>Views and Template Languages</li>
+                        <li>Persistence</li>
+                        <li>APIs and JSON</li>
+                        <li>Examples</li>
+                    </ul>
+                </section>
+                <section>
+                    <section>
+                        <h2>Node.js</h2>
+                        <a href="http://nodejs.org/">http://nodejs.org/</a>
+                        <img src="images/nodejs01.jpg"/>
+                    </section>
+                    <section>
+                        <h2>Node.js</h2>
+                        <ul>
+                            <li>JavaScript Runtime</li>
+                            <li>Based on Google V8 JavaScript Engine</li>
+                            <li>One thread for JavaScript</li>
+                            <li>Asynchronous operations via LibUv</li>
+                            <li>Native Modules</li>
+                            <li>Module Ecosystem</li>
+                        </ul>
+                    </section>
+                    <section data-markdown>
+## A Web Server
+```js
+ 
+var http = require('http');
+
+http.createServer(function (req, res) {
+	res.writeHeader(200, {'Content-type': 'text/plain'});
+	res.write('Hello ');
+	res.end('World');
+}).listen(8000);
+
+```
+                    </section>
+                    <section>
+                        <h2>NPM</h2>
+                        <a href="https://www.npmjs.org/">https://www.npmjs.org/</a>
+                        <img src='images/npm01.png'/>
+                    </section>
+                    <section>
+                        <h2>NPM</h2>
+                        <ul>
+                            <li>Node Package Manager</li>
+                            <li>Description in package.json</li>
+                            <li>Install packages in node_modules local folder</li>
+                            <li>Tree structure</li>
+                            <li>Local vs Global install</li>
+                        </ul>
+                    </section>
+                </section>
+				
+                <section>
+                    <section>
+                        <h2>Express</h2>
+                        <a href="http://expressjs.com/">http://expressjs.com/</a>
+                        <img src='images/express01.png'/>
+                    </section>
+                    <section>
+                        <h2>Express</h2>
+                        <ul>
+                            <li>Web Framework</li>
+                            <li>Latests Version: 4.x</li>
+                            <li>Minimalist</li>
+                            <li>Middleware</li>
+                            <li>MVC routing and views</li>
+                        </ul>
+                    </section>
+                </section>
+                
+                <section>
+                    <section>
+                        <h2>Minimal Example</h2>
+                    </section>
+                    <section data-markdown>
+## Minimal package.json
+```json
+{
+  "name": "hello-world",
+  "description": "hello world test app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "4.x"
+  }
+}
+```
+Then
+```
+npm install
+```
+                    </section>
+                    <section data-markdown>
+## Server Code
+app.js
+```js
+var express = require('express');
+var app = express();
+
+app.get('/hello.txt', function(req, res){
+  res.send('Hello World');
+});
+
+var server = app.listen(3000, function() {
+    console.log('Listening on port %d', server.address().port);
+});
+```
+
+Then
+```
+node app
+```
+Then
+```
+http://localhost:3000/hello.txt
+```
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Express Generator</h2>
+                    </section>
+                    <section data-markdown>
+## Express Generator
+```
+npm install -g express-generator
+```
+```
+Usage: express [options]
+
+Options:
+
+  -h, --help          output usage information
+  -V, --version       output the version number
+  -e, --ejs           add ejs engine support (defaults to jade)
+  -H, --hogan         add hogan.js engine support
+  -c, --css   add stylesheet  support (less|stylus|compass) (defaults to plain css)
+  -f, --force         force on non-empty directory
+```
+```
+express --css stylus myapp
+cd myapp
+npm install
+npm start
+```
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Express Elements</h2>
+                    </section>
+                    <section data-markdown>
+## Middleware
+```js
+ 
+app.use(function (req, res, next) {
+    // ...
+});
+
+```
+Example
+```js
+app.use('/api', function(req, res, next){
+  var key = req.query['api-key'];
+
+  // key isnt present
+  if (!key) return next(error(400, 'api key required'));
+
+  // key is invalid
+  if (!~apiKeys.indexOf(key)) return next(error(401, 'invalid api key'));
+
+  // all good, store req.key for route access
+  req.key = key;
+  next();
+});
+```
+                    </section>
+                    <section data-markdown>
+## Router
+A router module sample
+```js 
+var express = require('express');
+var router = express.Router();
+router.get('/', controller.index);
+router.get('/new', controller.create);
+router.post('/new', controller.insert);
+router.get('/:id', controller.view);
+router.get('/:id/edit', controller.edit);
+router.post('/:id/edit', controller.update);
+router.get('/:id/remove', controller.remove);
+
+module.exports = router;
+```
+
+Usage
+```js 
+app.use('/customer', customerrouter);
+
+```
+                    </section>
+                    <section data-markdown>
+## Action in Controller
+```js 
+function index(req, res) {
+    repository.findAll(function (err, items) {
+        if (err)
+            res.render('error', { error: err });
+        else
+            res.render('customerlist', { title: 'Customers', items: items });
+    });
+}
+```
+                    </section>
+                    <section data-markdown>
+## View (in ejs)
+```html
+&lt;% include header %&gt;
+
+&lt;div class=&quot;row btn-group&quot;&gt;
+&lt;a class=&quot;btn btn-primary&quot; href=&quot;/customers/new&quot;&gt;New Customer...&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;row&quot;&gt;
+&lt;table class=&quot;table-striped table-bordered&quot;&gt;
+    &lt;tr&gt;
+        &lt;th&gt;&amp;nbsp;&lt;/th&gt;
+        &lt;th&gt;Name&lt;/th&gt;
+        &lt;th&gt;Address&lt;/th&gt;
+    &lt;/tr&gt;
+&lt;% items.forEach(function (item) { %&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;a href=&quot;/customers/&lt;%= item._id %&gt;&quot;&gt;View...&lt;/a&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= item.name %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= item.address %&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;% }); %&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;% include footer %&gt;
+```
+                    </section>
+                    <section data-markdown>
+## Returning JSON
+```js 
+function getTeam(req, res) {
+    var id = getId(req.params.id);
+    service.getTeam(id, function (err, items) {
+        res.send(items);
+    });
+}
+```
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Resources</h2>
+                    </section>
+                    <section>
+                        <h2>Examples</h2>
+                        <a href="https://github.com/strongloop/express">https://github.com/strongloop/express</a>
+                        <a href="https://github.com/ajlopez/ExpressSamples">https://github.com/ajlopez/ExpressSamples</a>
+                        <a href="https://github.com/liquid-co-ops/liqueed">https://github.com/liquid-co-ops/liqueed</a>
+                        <a href="https://github.com/ccoenraets/nodecellar">https://github.com/ccoenraets/nodecellar</a>
+                        <a href="http://coenraets.org/blog/2011/12/restful-services-with-jquery-php-and-the-slim-framework/">RESTful services with jQuery, PHP and the Slim Framework</a>
+                        <a href="https://github.com/ccoenraets/wine-cellar-php">https://github.com/ccoenraets/wine-cellar-php</a>
+                    </section>
+                    <section>
+                        <h2>Boilerplates</h2>
+                        <a href="https://github.com/Traackr/chuck-node">https://github.com/Traackr/chuck-node</a>
+                        <a href="http://kroltech.com/2013/12/boilerplate-web-app-using-backbone-js-expressjs-node-js-mongodb/">http://kroltech.com/2013/12/boilerplate-web-app-using-backbone-js-expressjs-node-js-mongodb/</a>
+                    </section>
+                    <section>
+                        <h2>To Explore</h2>
+                        <a href="http://geddyjs.org/">http://geddyjs.org/</a>
+                        <a href="http://krakenjs.com/">http://krakenjs.com/</a>
+                        <a href="https://github.com/node-red/node-red">https://github.com/node-red/node-red</a>
+                        <a href="http://www.infoq.com/presentations/ibm-node-red">IBM Node Red</a>
+                        <a href="http://koajs.com/">KoaJS</a>
+                    </section>
+                </section>
+                
+                <section>
+                    <h1>The End</h1>
+                    <h3>BY Angel 'Java' Lopez / www.ajlopez.com / @ajlopez</h3>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
