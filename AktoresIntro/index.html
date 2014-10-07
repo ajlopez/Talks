@@ -199,11 +199,37 @@ ActorRef actorref = this.Context.ActorSelect("/otheractor/childactor");
 ActorRef actorref2 = this.Context.ActorSelect("mychildactor");
 ```
                     </section>
-                    <section>
-                        <h2>Actor Path<h2>
+                    <section data-markdown>
+## Actor Reference
+Reference to Actor, tell message.
+
+Create Actors
+```csharp
+MyActor actor = new MyActor();
+ActorRef actorref = system.ActorOf(actor, "actor1");
+```
+
+Send Message
+```csharp
+actorref.Tell("hello");
+actorref.Tell("hi", this.Self); // this actor ActorRef
+```
                     </section>
-                    <section>
-                        <h2>System Address<h2>
+                    <section data-markdown>
+## Remote Actors
+Reference to Actor, tell message.
+
+Create Actors
+```csharp
+MyActor actor = new MyActor();
+ActorRef actorref = system.ActorOf(actor, "actor1");
+```
+
+Send Message
+```csharp
+actorref.Tell("hello");
+actorref.Tell("hi", this.Self); // this actor ActorRef
+```
                     </section>
                 </section>
 
