@@ -64,6 +64,7 @@
                         <ul>
                         <li><a href="http://www.slideshare.net/jboner/the-road-to-akka-cluster-and-beyond">The Road to Akka Cluster and Beyond</a> (<a href="https://www.youtube.com/watch?v=U1C5m8b0qghttps://www.youtube.com/watch?v=U1C5m8b0qg0">Youtube</a>)</li>
                         <li><a href="http://www.slideshare.net/YungLinHo/introduction-to-actor-model-and-akka">Introduction to Actor Model and Akka</a></li>
+                        <li><a href="http://www.slideshare.net/YungLinHo/introduction-to-actor-model-and-akka-15206112">Introduction to Actor Model and Akka</a></li>
                     </section>
                 </section>
                 <section>
@@ -119,6 +120,20 @@
                     <section>
                         <h2>Actor Model</h2>
                     </section>
+                    <section>
+                        <h2>Actor Model</h2>
+                        <ul>
+                            <li>Formalized by Carl Hewitt (1973)</li>
+                            <li>Refined by Gul Agha (mid 80s)</li>
+                            <li>First major adoption: Ericsson (mid 80s)</li>
+                            <li>Invented Erlang (open sourced in 90s)</li>
+                            <li>Built distributed, concurrent, fault-tolerant telcom system 99.99....% uptime</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Actor</h2>
+                        <img src="images/actor01.png"/>
+                    </section>
                 </section>
 
                 <section>
@@ -138,9 +153,51 @@
                         <h2>Actor System<h2>
                         <img src="images/aktores03.png"/>
                     </section>
+                    <section data-markdown>
+## Actor System
+It is the top of actor hyerarchy.
+
+Create
+```csharp
+ActorSystem system = new ActorSystem();
+```
+
+Create Actors
+```csharp
+MyActor actor = new MyActor();
+ActorRef actorref = system.ActorOf(actor, "actor1");
+ActorRef actorref2 = system.ActorOf(typeof(MyActor), "actor2");
+```
+
+Retrieve Actors
+```csharp
+ActorRef actorref = system.ActorSelect("/myactor/mychildactor");
+```
+                    </section>
                     <section>
                         <h2>Actor Context<h2>
                         <img src="images/aktores04.png"/>
+                    </section>
+                    <section data-markdown>
+## Actor Context
+Each Actor has an Actor Context.
+
+```csharp
+this.Context
+```
+
+Create Actors
+```csharp
+MyActor actor = new MyActor();
+ActorRef actorref = this.Context.ActorOf(actor, "actor1");
+ActorRef actorref2 = this.Context.ActorOf(typeof(MyActor), "actor2");
+```
+
+Retrieve Actors
+```csharp
+ActorRef actorref = this.Context.ActorSelect("/otheractor/childactor");
+ActorRef actorref2 = this.Context.ActorSelect("mychildactor");
+```
                     </section>
                     <section>
                         <h2>Actor Path<h2>
@@ -153,6 +210,20 @@
                 <section>
                     <section>
                         <h2>Resources</h2>
+                        <ul>
+                            <li><a href="http://akka.io/">Akka (Java/Scala)</a></li>
+                            <li><a href="https://github.com/VaughnVernon/Dotsero">Dotsero (.NET)</a></li>
+                            <li><a href="http://blogs.msdn.com/b/dotnet/archive/2014/04/02/available-now-preview-of-project-orleans-cloud-services-at-scale.aspx">Previos of Project Orleans</a></li>
+                            <li><a href="https://github.com/AkkaDotNet/akka.net">Akka.NET</a></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>My Delicious Links</h2>
+                        <ul>
+                            <li><a href="https://delicious.com/ajlopez/actormodel">Actor Model</a></li>
+                            <li><a href="https://delicious.com/ajlopez/akka">Akka</a></li>
+                            <li><a href="https://delicious.com/ajlopez/distributedcomputing">Distributed Computing</a></li>
+                        </ul>
                     </section>
                 </section>
                 
