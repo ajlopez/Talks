@@ -64,7 +64,6 @@
                         <ul>
                         <li><a href="http://www.slideshare.net/jboner/the-road-to-akka-cluster-and-beyond">The Road to Akka Cluster and Beyond</a> (<a href="https://www.youtube.com/watch?v=U1C5m8b0qghttps://www.youtube.com/watch?v=U1C5m8b0qg0">Youtube</a>)</li>
                         <li><a href="http://www.slideshare.net/YungLinHo/introduction-to-actor-model-and-akka">Introduction to Actor Model and Akka</a></li>
-                        <li><a href="http://www.slideshare.net/YungLinHo/introduction-to-actor-model-and-akka-15206112">Introduction to Actor Model and Akka</a></li>
                     </section>
                 </section>
                 <section>
@@ -85,16 +84,7 @@
                     </section>
                     
                     <section>
-                        <h2>Essence of Distributed Computing</h2>
-                        <p>It's to try to overcome</p>
-                        <ul>
-                            <li>Information travels at the speed of light</li>
-                            <li>Independent things fail independtly</li>
-                        </ul>
-                    </section>
-                    
-                    <section>
-                        <h2>Why do we need it?</h2>
+                        <h2>Needs</h2>
                         <ul>
                             <li>Elasticity (beyond a single node)</li>
                             <li>Availability (resilience if one node fails)</li>
@@ -113,6 +103,47 @@
                             <li>Part One: Theory</li>
                             <li>Part Two: Practice</li>
                         </ul>
+                    </section>
+                    
+                    <section>
+                        <h2>Motivation</h2>
+                        <ul>
+                            <li>Moore's Law</li>
+                            <li>1971: 2 300 transistors per chip</li>
+                            <li>2011: 2 600 000 000 transistors per chip</li>
+                            <li>Network</li>
+                            <li>ARPANET 1968: 50 000 bits per second</li>
+                            <li>US-Japan backbone 2011: 500 000 000 000 bits per second</li>
+                            <li>Storage</li>
+                            <li>First hard drive 1956: 4 400 000 bytes</li>
+                            <li>Hard drive 2011: 4 000 000 000 000 bytes</li>
+                        </ul>
+                    </section>
+                    
+                    
+                    <section>
+                        <h2>The Future</h2>
+                        <p>
+                        "At the same rate of growth, by 2031, we may see a thousandfold further improvement
+in hardware, resulting in 1,000 plus-core processors in mobile devices,
+laptops, and desktops, 100-terabit-per-second-plus network backbones, and hard
+drives storing petabytes of data. The growing number of transistors in emerging
+multicore architectures can only be translated into practical software applications’
+performance if software developers understand how to program concurrent systems
+effectively."</p>
+                    </section>
+                    <section>
+                        <h2>Concurrency vs Parallelism</h2>
+                        <p>Concurrencty: n threads are making progress<p>
+                        <p>Parallelism: n threads are executing SIMULTANEOSLY</p>
+                    </section>
+                    
+                    <section>
+                        <h2>Distributed Computing</h2>
+                        <p>"Internet computing, web computing, grid computing, and cloud computing are
+all forms of distributed computing"</p>
+                        <p>"One significant advantage of distributed computation
+is the potential scalability afforded by applications"</p>
                     </section>
                 </section>
 				
@@ -134,6 +165,42 @@
                         <h2>Actor</h2>
                         <img src="images/actor01.png"/>
                     </section>
+                    <section>
+                        <h2>Actor</h2>
+                        <ul>
+                            <li>Lightweight Object</li>
+                            <li>No Shared State</li>
+                            <li>Messages in Mailbox</li>
+                            <li>They are processed in order</li>
+                            <li>Only one message at a time</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Actors and Messaging</h2>
+                        <img src="images/actors01.png"/>
+                    </section>
+                    <section>
+                        <h2>Supervisor and Workers</h2>
+                        <img src="images/actors02.png"/>
+                    </section>
+                    <section>
+                        <h2>Akka</h2>
+                        <a href="http://akka.io/">http://akka.io/</a>
+                        <img src="images/akka01.png"/>
+                    </section>
+                    <section>
+                        <h2>Akka</h2>
+                        <ul>
+                            <li>Founded by Jonas Boner (@jboner), now part of Typesafe stack</li>
+                            <li>Actor implementation on Java Virtual Machine</li>
+                            <li>Java API</li>
+                            <li>Scala API</li>
+                            <li>Local and Remote Actors</li>
+                            <li>Cluster</li>
+                            <li>Actor Persistence</li>
+                            <li>Supervision</li>
+                        </ul>
+                    </section>
                 </section>
 
                 <section>
@@ -149,13 +216,36 @@
                         <h2>Actor<h2>
                         <img src="images/aktores02.png"/>
                     </section>
+                    <section data-markdown>
+## Actor
+A custom class that inherits abstract class Actor.
+
+```csharp
+public class LambdaActor : Actor
+{
+    private Action&lt;object&gt; fn;
+
+    public LambdaActor(Action&lt;object&gt; fn)
+    {
+        this.fn = fn;
+    }
+
+    // Override this methods
+    public override void Receive(object message)
+    {
+        this.fn(message);
+    }
+}
+```
+
+                    </section>
                     <section>
                         <h2>Actor System<h2>
                         <img src="images/aktores03.png"/>
                     </section>
                     <section data-markdown>
 ## Actor System
-It is the top of actor hyerarchy.
+Top of actor hyerarchy.
 
 Create
 ```csharp
@@ -216,20 +306,44 @@ actorref.Tell("hi", this.Self); // this actor ActorRef
 ```
                     </section>
                     <section data-markdown>
+## Routers
+Send a message to a Router, then it is received by one Actor in Router list.
+
+Create router and register ActorRefs
+```csharp
+var router = new RouterActor();
+router.Register(actorref);
+router.Register(actorref2);
+var routerref = system.ActorOf(router, "actor");
+//...
+```
+
+Send Message to Router
+```csharp
+routerref.Tell("hello");
+```
+Only one Actor processes the message
+                    </section>
+                    <section data-markdown>
 ## Remote Actors
-Reference to Actor, tell message.
+Each Actor has a Path, but an ActorSystem can be publish in an Address.
 
-Create Actors
+Publish System via TCP
 ```csharp
-MyActor actor = new MyActor();
-ActorRef actorref = system.ActorOf(actor, "actor1");
+ActorSystem system = new ActorSystem();
+TcpServer server = new TcpServer("localhost", 3000, system);
 ```
 
-Send Message
+Send Message to Remote Actor
 ```csharp
+ActorRef actorref = 
+    localsystem.ActorSelect("aktores.tcp//sys@localhost:3000/remoteactor");
 actorref.Tell("hello");
-actorref.Tell("hi", this.Self); // this actor ActorRef
 ```
+                    </section>
+                    <section>
+                        <h2>Example: Web Crawler</h2>
+                        <img src="images/webcrawler01.png"/>
                     </section>
                 </section>
 
