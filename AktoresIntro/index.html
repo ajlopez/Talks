@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Distributed Applications, Intro to Aktores, Actor Model in C#</title>
+
+        <meta name="description" content="Distributed Applications, Intro to Aktores, Actor Model in C#">
+        <meta name="author" content="Angel 'Java' Lopez">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Distributed Applications in C#, Intro to Aktores</h1>
+                    <h3>Actor Model in C#</h3>
+                    <p>
+                        Created by <a href="http://twitter.com/ajlopez">@ajlopez</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/ajlopez/Talks/AktoresIntro">https://github.com/ajlopez/Talks/AktoresIntro</a>
+                    </p>
+                    <p>
+                        <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
+                    </p>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Agenda</h2>
+                        <ul>
+                            <li>Distributed Applications</li>
+                            <li>Actor Model</li>
+                            <li>Aktores in C#</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h2>Sources</h2>
+                        <ul>
+                        <li><a href="http://www.slideshare.net/jboner/the-road-to-akka-cluster-and-beyond">The Road to Akka Cluster and Beyond</a> (<a href="https://www.youtube.com/watch?v=U1C5m8b0qghttps://www.youtube.com/watch?v=U1C5m8b0qg0">Youtube</a>)</li>
+                        <li><a href="http://www.slideshare.net/YungLinHo/introduction-to-actor-model-and-akka">Introduction to Actor Model and Akka</a></li>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Distributed Applications</h2>
+                    </section>
+                    
+                    <section>
+                        <h2>Distributed Computing is the New Normal</h2>
+                        <ul>
+                            <li>You already have a distributed system</li>
+                            <li>Mobile</li>
+                            <li>NoSQL Databases</li>
+                            <li>SQL Replications</li>
+                            <li>Cloud</li>
+                            <li>REST Services</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h2>Needs</h2>
+                        <ul>
+                            <li>Elasticity (beyond a single node)</li>
+                            <li>Availability (resilience if one node fails)</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h2>Programming Distributed Computing Systems</h2>
+                        <img src="images/varela01.png"/>
+                    </section>
+                    
+                    <section>
+                        <h2>Programming Distributed Computing Systems</h2>
+                        <ul>
+                            <li>Author: Carlos Varela <a href="http://www.cs.rpi.edu/~cvarela/">http://www.cs.rpi.edu/~cvarela/</a></li>
+                            <li>Part One: Theory</li>
+                            <li>Part Two: Practice</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h2>Motivation</h2>
+                        <ul>
+                            <li>Moore's Law</li>
+                            <li>1971: 2 300 transistors per chip</li>
+                            <li>2011: 2 600 000 000 transistors per chip</li>
+                            <li>Network</li>
+                            <li>ARPANET 1968: 50 000 bits per second</li>
+                            <li>US-Japan backbone 2011: 500 000 000 000 bits per second</li>
+                            <li>Storage</li>
+                            <li>First hard drive 1956: 4 400 000 bytes</li>
+                            <li>Hard drive 2011: 4 000 000 000 000 bytes</li>
+                        </ul>
+                    </section>
+                    
+                    
+                    <section>
+                        <h2>The Future</h2>
+                        <p>
+                        "At the same rate of growth, by 2031, we may see a thousandfold further improvement
+in hardware, resulting in 1,000 plus-core processors in mobile devices,
+laptops, and desktops, 100-terabit-per-second-plus network backbones, and hard
+drives storing petabytes of data. The growing number of transistors in emerging
+multicore architectures can only be translated into practical software applications’
+performance if software developers understand how to program concurrent systems
+effectively."</p>
+                    </section>
+                    <section>
+                        <h2>Concurrency vs Parallelism</h2>
+                        <p>Concurrencty: n threads are making progress<p>
+                        <p>Parallelism: n threads are executing SIMULTANEOSLY</p>
+                    </section>
+                    
+                    <section>
+                        <h2>Distributed Computing</h2>
+                        <p>"Internet computing, web computing, grid computing, and cloud computing are
+all forms of distributed computing"</p>
+                        <p>"One significant advantage of distributed computation
+is the potential scalability afforded by applications"</p>
+                    </section>
+                </section>
+				
+                <section>
+                    <section>
+                        <h2>Actor Model</h2>
+                    </section>
+                    <section>
+                        <h2>Actor Model</h2>
+                        <ul>
+                            <li>Formalized by Carl Hewitt (1973)</li>
+                            <li>Refined by Gul Agha (mid 80s)</li>
+                            <li>First major adoption: Ericsson (mid 80s)</li>
+                            <li>Invented Erlang (open sourced in 90s)</li>
+                            <li>Built distributed, concurrent, fault-tolerant telcom system 99.99....% uptime</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Actor</h2>
+                        <img src="images/actor01.png"/>
+                    </section>
+                    <section>
+                        <h2>Actor</h2>
+                        <ul>
+                            <li>Lightweight Object</li>
+                            <li>No Shared State</li>
+                            <li>Messages in Mailbox</li>
+                            <li>They are processed in order</li>
+                            <li>Only one message at a time</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Actors and Messaging</h2>
+                        <img src="images/actors01.png"/>
+                    </section>
+                    <section>
+                        <h2>Supervisor and Workers</h2>
+                        <img src="images/actors02.png"/>
+                    </section>
+                    <section>
+                        <h2>Akka</h2>
+                        <a href="http://akka.io/">http://akka.io/</a>
+                        <img src="images/akka01.png"/>
+                    </section>
+                    <section>
+                        <h2>Akka</h2>
+                        <ul>
+                            <li>Founded by Jonas Boner (@jboner), now part of Typesafe stack</li>
+                            <li>Actor implementation on Java Virtual Machine</li>
+                            <li>Java API</li>
+                            <li>Scala API</li>
+                            <li>Local and Remote Actors</li>
+                            <li>Cluster</li>
+                            <li>Actor Persistence</li>
+                            <li>Supervision</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Aktores</h2>
+                    </section>
+                    <section>
+                        <h2>Actor Model in C#</h2>
+                        <a href="https://github.com/ajlopez/Aktores">https://github.com/ajlopez/Aktores</a>
+                        <img src="images/aktores01.png"/>
+                    </section>
+                    <section>
+                        <h2>Actor<h2>
+                        <img src="images/aktores02.png"/>
+                    </section>
+                    <section data-markdown>
+## Actor
+A custom class that inherits abstract class Actor.
+
+```csharp
+public class LambdaActor : Actor
+{
+    private Action&lt;object&gt; fn;
+
+    public LambdaActor(Action&lt;object&gt; fn)
+    {
+        this.fn = fn;
+    }
+
+    // Override this methods
+    public override void Receive(object message)
+    {
+        this.fn(message);
+    }
+}
+```
+
+                    </section>
+                    <section>
+                        <h2>Actor System<h2>
+                        <img src="images/aktores03.png"/>
+                    </section>
+                    <section data-markdown>
+## Actor System
+Top of actor hyerarchy.
+
+Create
+```csharp
+ActorSystem system = new ActorSystem();
+```
+
+Create Actors
+```csharp
+MyActor actor = new MyActor();
+ActorRef actorref = system.ActorOf(actor, "actor1");
+ActorRef actorref2 = system.ActorOf(typeof(MyActor), "actor2");
+```
+
+Retrieve Actors
+```csharp
+ActorRef actorref = system.ActorSelect("/myactor/mychildactor");
+```
+                    </section>
+                    <section>
+                        <h2>Actor Context<h2>
+                        <img src="images/aktores04.png"/>
+                    </section>
+                    <section data-markdown>
+## Actor Context
+Each Actor has an Actor Context.
+
+```csharp
+this.Context
+```
+
+Create Actors
+```csharp
+MyActor actor = new MyActor();
+ActorRef actorref = this.Context.ActorOf(actor, "actor1");
+ActorRef actorref2 = this.Context.ActorOf(typeof(MyActor), "actor2");
+```
+
+Retrieve Actors
+```csharp
+ActorRef actorref = this.Context.ActorSelect("/otheractor/childactor");
+ActorRef actorref2 = this.Context.ActorSelect("mychildactor");
+```
+                    </section>
+                    <section data-markdown>
+## Actor Reference
+Reference to Actor, tell message.
+
+Create Actors
+```csharp
+MyActor actor = new MyActor();
+ActorRef actorref = system.ActorOf(actor, "actor1");
+```
+
+Send Message
+```csharp
+actorref.Tell("hello");
+actorref.Tell("hi", this.Self); // this actor ActorRef
+```
+                    </section>
+                    <section data-markdown>
+## Routers
+Send a message to a Router, then it is received by one Actor in Router list.
+
+Create router and register ActorRefs
+```csharp
+var router = new RouterActor();
+router.Register(actorref);
+router.Register(actorref2);
+var routerref = system.ActorOf(router, "actor");
+//...
+```
+
+Send Message to Router
+```csharp
+routerref.Tell("hello");
+```
+Only one Actor processes the message
+                    </section>
+                    <section data-markdown>
+## Remote Actors
+Each Actor has a Path, but an ActorSystem can be publish in an Address.
+
+Publish System via TCP
+```csharp
+ActorSystem system = new ActorSystem();
+TcpServer server = new TcpServer("localhost", 3000, system);
+```
+
+Send Message to Remote Actor
+```csharp
+ActorRef actorref = 
+    localsystem.ActorSelect("aktores.tcp//sys@localhost:3000/remoteactor");
+actorref.Tell("hello");
+```
+                    </section>
+                    <section>
+                        <h2>Example: Web Crawler</h2>
+                        <img src="images/webcrawler01.png"/>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Resources</h2>
+                        <ul>
+                            <li><a href="http://akka.io/">Akka (Java/Scala)</a></li>
+                            <li><a href="https://github.com/VaughnVernon/Dotsero">Dotsero (.NET)</a></li>
+                            <li><a href="http://blogs.msdn.com/b/dotnet/archive/2014/04/02/available-now-preview-of-project-orleans-cloud-services-at-scale.aspx">Previos of Project Orleans</a></li>
+                            <li><a href="https://github.com/AkkaDotNet/akka.net">Akka.NET</a></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>My Delicious Links</h2>
+                        <ul>
+                            <li><a href="https://delicious.com/ajlopez/actormodel">Actor Model</a></li>
+                            <li><a href="https://delicious.com/ajlopez/akka">Akka</a></li>
+                            <li><a href="https://delicious.com/ajlopez/distributedcomputing">Distributed Computing</a></li>
+                        </ul>
+                    </section>
+                </section>
+                
+                <section>
+                    <h1>The End</h1>
+                    <h3>BY Angel 'Java' Lopez / www.ajlopez.com / @ajlopez</h3>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
