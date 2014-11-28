@@ -131,8 +131,37 @@
                         <h2>Genetic Algorithms</h2>
                     </section>
                     <section>
+                        <h2>Genotype</h2>
+                    </section>
+                    <section>
                         <h2>Generic Structure</h2>
                         <img src="images/genetic1.png"/>
+                    </section>
+                    <section data-markdown>
+## Creating and Running Populations
+```js
+for (var k = 0; k < 1000; k++)
+    genotypes.push(Path.createGenotype(/* ... */));
+
+var mutators = [];
+
+for (var k = 0; k < 4; k++)
+    mutators.push(Path.createMutator());
+
+engine = new simplega.Engine({ minimize: true });
+engine.setPopulation(genotypes);
+engine.setMutators(mutators);
+
+//
+
+var newgenotypes = engine.nextPopulation();
+best = simplega.getBestGenotype(newgenotypes, { minimize: true });
+```
+                    </section>
+                    <section>
+                        <h2>Path Sample</h2>
+                        <img src="images/path1.png"/>
+                        <a href="https://github.com/ajlopez/SimpleGA/blob/master/samples/path/path.html">https://github.com/ajlopez/SimpleGA/blob/master/samples/path/path.html</a>
                     </section>
                 </section>
 
@@ -148,10 +177,36 @@
                         <h2>Many Layers</h2>
                         <img src="images/neuron2.png"/>
                     </section>
+                    <section data-markdown>
+## Creating and Training a Network
+```js
+var network = sn.network([6, 10, 3]);
+
+var outputs = network.outputs([0, 0, 1, 1, 0, 0]);
+console.dir(outputs);
+
+for (var k = 0; k < 20; k++) {
+    network.train([0, 0, 1, 1, 0, 0], [0, 1, 0], 0.1);
+    // ....
+}
+```
+                    </section>
                     <section>
                         <h2>Digits</h2>
-                        <a href="https://github.com/ajlopez/SimpleNeuron/tree/master/samples/digits">https://github.com/ajlopez/SimpleNeuron/tree/master/samples/digits</a>
                         <img src="images/digits1.png"/>
+                        <a href="https://github.com/ajlopez/SimpleNeuron/tree/master/samples/digits">https://github.com/ajlopez/SimpleNeuron/tree/master/samples/digits</a>
+                    </section>
+                    <section>
+                        <h2>ConvNetJS</h2>
+                        <p>Deep Learning in your browser</p>
+                        <a href="http://cs.stanford.edu/people/karpathy/convnetjs/">http://cs.stanford.edu/people/karpathy/convnetjs/</a>
+                        <img src="images/convnetjs1.png"/>
+                        <a href="https://github.com/ajlopez/JavaScriptAI/tree/master/static">https://github.com/ajlopez/JavaScriptAI/tree/master/static</a>
+                    </section>
+                    <section>
+                        <h2>ConvNetJS Cifar10</h2>
+                        <img src="images/convnetjs2.png"/>
+                        <a href="https://github.com/ajlopez/JavaScriptAI/tree/master/static">https://github.com/ajlopez/JavaScriptAI/tree/master/static</a>
                     </section>
                 </section>
 
