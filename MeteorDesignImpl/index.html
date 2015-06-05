@@ -242,6 +242,7 @@ The current temperature is 71.9 F       (printed a few minutes later)
                     
                     <section>
                         <h2>Blaze</h2>
+                        <a href="https://www.meteor.com/blaze">https://www.meteor.com/blaze</a>
                         <ul>
                             <li>Reactive DOM update engine</li>
                             <li>Plain HTML template updated in real-time</li>
@@ -250,6 +251,30 @@ The current temperature is 71.9 F       (printed a few minutes later)
                         </ul>
                     </section>
                     
+                    <section data-markdown>
+## Spacebars in Blaze
+
+https://atmospherejs.com/meteor/spacebars
+
+```html
+&lt;template name="myPage"&gt;
+  &lt;h1&gt;{{pageTitle}}&lt;/h1&gt;
+
+  {{&gt; nav}}
+
+  {{#each posts}}
+    &lt;div class="post"&gt;
+      &lt;h3&gt;{{title}}&lt;/h3&gt;
+      &lt;div class="post-content"&gt;
+        {{{content}}}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  {{/each}}
+&lt;/template&gt;
+```
+
+                    </section>
+
                     <section>
                         <h2>Isobuild</h2>
                         <a href="https://www.meteor.com/isobuild">https://www.meteor.com/isobuild</a>
