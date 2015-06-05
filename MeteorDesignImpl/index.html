@@ -173,6 +173,25 @@
                             <li>Stateful, unlike HTTP</li>
                         </ul>
                     </section>
+                    <section>
+                        <h2>observeChanges</h2>
+// Keep track of how many administrators are online.
+var count = 0;
+var query = Users.find({admin: true, onlineNow: true});
+var handle = query.observeChanges({
+  added: function (id, user) {
+    count++;
+    console.log(user.name + " brings the total to " + count + " admins.");
+  },
+  removed: function () {
+    count--;
+    console.log("Lost one. We're now down to " + count + " admins.");
+  }
+});
+
+// After five seconds, stop keeping the count.
+setTimeout(function () {handle.stop();}, 5000);                        
+                    </section>
                 </section>
                     
                 <section>
