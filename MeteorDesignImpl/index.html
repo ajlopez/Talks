@@ -173,8 +173,10 @@
                             <li>Stateful, unlike HTTP</li>
                         </ul>
                     </section>
-                    <section>
-                        <h2>observeChanges</h2>
+                    <section data-markdown>
+## observeChanges
+
+```js
 // Keep track of how many administrators are online.
 var count = 0;
 var query = Users.find({admin: true, onlineNow: true});
@@ -191,6 +193,51 @@ var handle = query.observeChanges({
 
 // After five seconds, stop keeping the count.
 setTimeout(function () {handle.stop();}, 5000);                        
+```
+
+                    </section>
+                    <section>
+                        <h2>Mini databases</h2>
+                        <ul>
+                            <li>In-memory cache on the client</li>
+                            <li>tipically fed by DDP subscriptions</li>
+                            <li>DB queries on the client</li>
+                            <li>Isomorphic. Pure JS, same API</li>
+                            <li>Supports latency compensation</li>
+                            <li>Speculative local writes</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Tracker</h2>
+                        <ul>
+                            <li>Tiny (1k)</li>
+                            <li>Transparent reactive programming in JavaScript</li>
+                            <li>Simple convention/interface</li>
+                            <li>Reactive data sources (like mini database)</li>
+                            <li>Reactive data consumers (like template engine)</li>
+                            <li>Makes plain old JS functions reactive</li>
+                            <li>Alternative to: poll; diff/dirty; controllers listening for change events; bindings</li>
+                        </ul>
+                    </section>
+                    <section data-markdown>
+## Example
+
+```js
+var currentTemperatureFahrenheit = function () {
+  return currentTemperatureCelsius() * 9/5 + 32;
+};                    
+```
+
+```
+> var handle = Tracker.autorun(function () {
+  console.log("The current temperature is", currentTemperatureFahrenheit(),
+              "F");
+  });
+The current temperature is 71.8 F       (printed immediately)
+The current temperature is 71.9 F       (printed a few minutes later)
+> handle.stop();                        (stop temperature changes from printing)
+```
+
                     </section>
                 </section>
                     
