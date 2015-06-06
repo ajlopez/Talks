@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>The design and implementation of the Meteor platform</title>
+
+        <meta name="description" content="The design and implementation of the Meteor platform">
+        <meta name="author" content="Angel 'Java' Lopez">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>The design and implementation of Meteor</h1>
+                    <h3>The new platform</h3>
+                    <p>
+                        Created by <a href="http://twitter.com/ajlopez">@ajlopez</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/ajlopez/Talks/JavaScriptAI">https://github.com/ajlopez/Talks/MeteorDesignImpl</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/ajlopez/JavaScriptAI">https://github.com/ajlopez/MeteorDesignImpl</a>
+                    </p>
+                    <p>
+                        <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
+                    </p>
+                </section>
+                
+                <section>
+                    <h2>Sources</h2>
+                    <ul>
+                        <li><a href="https://www.youtube.com/watch?v=tqLbodVH3dw">Matt Debergalis: The design and implementation of the Meteor platform</a>
+                        <li><a href="https://www.youtube.com/watch?v=kZp50o6uSd4">Matt Debergalis New Meteor Platform: a single reactive JavaScript codebase Solution</a>
+                    </ul>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Applications</h2>
+                    </section>
+                    <section>
+                        <h2>Evolution</h2>
+                        <ul>
+                            <li>Mainframe</li>
+                            <li>PC</li>
+                            <li>Web</li>
+                            <li>???</li>
+                        </ul>
+                        <p>We don't use the same tools</p>
+                    </section>
+                    <section>
+                        <h2>And now</h2>
+                        <img src="images/uber01.jpg"/>
+                    </section>
+                    <section>
+                        <h2>New Kind of Applications</h2>
+                        <ul>
+                            <li>Realtime APIs and data</li>
+                            <li>Desktop-like interface</li>
+                            <li>Powerful, heterogenous devices</li>
+                            <li>Distributed services in the cloud</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Now: Cloud / client</h2>
+                        <ul>
+                            <li>Reactive</li>
+                            <li>Distributed systems, that run on</li>
+                            <li>Diverse architectures, and put</li>
+                            <li>Data on the wire</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Meteor</h2>
+                        <a href="http://www.meteor.com/">http://www.meteor.com/</a>
+                        <p>Cloud/clients applications in pure JavaScript
+                    </section>
+                    
+                    <section>
+                        <h2>A Platform, not a Framework</h2>
+                        <ul>
+                            <li>Frameworks tell you how to make an app</li>
+                            <li>Meteor just gives you the key building blocks</li>
+                            <li>You put them together however you want</li>
+                            <li>Like UNIX, not like Rails</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Built on two conceptual pillars</h2>
+                        <ul>
+                            <li>Full stack reactivity</li>
+                            <li>Isomorphic APIs</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Open architecture</h2>
+                        <ul>
+                            <li>Simple APIs</li>
+                            <li>Small core</li>
+                            <li>Atmosphere</li>
+                        </ul>
+                    </section>
+                </section>
+                
+                <section>
+                    <section>
+                        <h2>Implementation</h2>
+                    </section>
+                    
+                    <section>
+                        <h2>DDP</h2>
+                        <a href="https://www.meteor.com/ddp">https://www.meteor.com/ddp</a>
+                        <ul>
+                            <li>Distributed data protocol</li>
+                            <li>Standard way to synchronize data</li>
+                            <li>Uses websockets</li>
+                            <li>Total separation of client and server</li>
+                            <li>Shared tooling and interoperability btw c/c apps</li>
+                            <li>Realtime APIs</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>DDP Subscriptions</h2>
+                        <ul>
+                            <li>Clients subscribe to a set of documents (named endpoint)</li>
+                            <li>Server sends added/changed/removed messages</li>
+                            <li>Akin to GET in REST</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>DDP Methods</h2>
+                        <ul>
+                            <li>Remote procedure calls</li>
+                            <li>DDP assures once-and-only-once execution</li>
+                            <li>Akin to POST/PUT/DELETE in REST</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>DDP Data</h2>
+                        <ul>
+                            <li>JSON over websockets</li>
+                            <li>Long polling as fallback</li>
+                            <li>Stateful, unlike HTTP</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Livequery</h2>
+                        <ul>
+                            <li>JSON over websockets</li>
+                            <li>Long polling as fallback</li>
+                            <li>Stateful, unlike HTTP</li>
+                        </ul>
+                    </section>
+                    <section data-markdown>
+## observeChanges
+
+```js
+// Keep track of how many administrators are online.
+var count = 0;
+var query = Users.find({admin: true, onlineNow: true});
+var handle = query.observeChanges({
+  added: function (id, user) {
+    count++;
+    console.log(user.name + " brings the total to " + count + " admins.");
+  },
+  removed: function () {
+    count--;
+    console.log("Lost one. We're now down to " + count + " admins.");
+  }
+});
+
+// After five seconds, stop keeping the count.
+setTimeout(function () {handle.stop();}, 5000);                        
+```
+
+                    </section>
+                    <section>
+                        <h2>Mini databases</h2>
+                        <ul>
+                            <li>In-memory cache on the client</li>
+                            <li>tipically fed by DDP subscriptions</li>
+                            <li>DB queries on the client</li>
+                            <li>Isomorphic. Pure JS, same API</li>
+                            <li>Supports latency compensation</li>
+                            <li>Speculative local writes</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Tracker</h2>
+                        <ul>
+                            <li>Tiny (1k)</li>
+                            <li>Transparent reactive programming in JavaScript</li>
+                            <li>Simple convention/interface</li>
+                            <li>Reactive data sources (like mini database)</li>
+                            <li>Reactive data consumers (like template engine)</li>
+                            <li>Makes plain old JS functions reactive</li>
+                            <li>Alternative to: poll; diff/dirty; controllers listening for change events; bindings</li>
+                        </ul>
+                    </section>
+                    <section data-markdown>
+## Example
+
+```js
+var currentTemperatureFahrenheit = function () {
+  return currentTemperatureCelsius() * 9/5 + 32;
+};                    
+```
+
+```
+> var handle = Tracker.autorun(function () {
+  console.log("The current temperature is", currentTemperatureFahrenheit(),
+              "F");
+  });
+The current temperature is 71.8 F       (printed immediately)
+The current temperature is 71.9 F       (printed a few minutes later)
+> handle.stop();                        (stop temperature changes from printing)
+```
+
+                    </section>
+                    
+                    <section>
+                        <h2>Blaze</h2>
+                        <a href="https://www.meteor.com/blaze">https://www.meteor.com/blaze</a>
+                        <ul>
+                            <li>Reactive DOM update engine</li>
+                            <li>Plain HTML template updated in real-time</li>
+                            <li>No directives (unlike Angular or React)</li>
+                            <li>Supports any template language (shipped with spacebars)</li>
+                        </ul>
+                    </section>
+                    
+                    <section data-markdown>
+## Spacebars in Blaze
+
+https://atmospherejs.com/meteor/spacebars
+
+```html
+&lt;template name="myPage"&gt;
+  &lt;h1&gt;{{pageTitle}}&lt;/h1&gt;
+
+  {{&gt; nav}}
+
+  {{#each posts}}
+    &lt;div class="post"&gt;
+      &lt;h3&gt;{{title}}&lt;/h3&gt;
+      &lt;div class="post-content"&gt;
+        {{{content}}}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  {{/each}}
+&lt;/template&gt;
+```
+
+                    </section>
+
+                    <section>
+                        <h2>Isobuild</h2>
+                        <a href="https://www.meteor.com/isobuild">https://www.meteor.com/isobuild</a>
+                        <ul>
+                            <li>Build tool</li>
+                            <li>From one codebase, assembles code bundles</li>
+                            <li>Server (Node)</li>
+                            <li>Mobile (Cordova)</li>
+                            <li>Browser</li>
+                            <li>Akin to a linker in the UNIX toolchain</li>
+                            <li>Closely related to the Meteor package system</li>
+                        </ul>
+                    </section>
+                </section>
+                    
+                <section>
+                    <h1>The End</h1>
+                    <h3>BY Angel 'Java' Lopez / @ajlopez</h3>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
