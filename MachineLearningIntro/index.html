@@ -51,7 +51,96 @@
                         <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
                     </p>
                 </section>
+                
+                <section>
+                    <section>
+                        <h2>Machine Learning</h2>
+                        <img class="fragment" src="images/hal01.png"/>
+                    </section>
+                    <section>
+                        <h2>Definitions?</h2>
+                        <p class="fragment">The science of getting computers to act without being explicitly programmed</p>
+                        <p class="fragment">The construction and study of algorithms that can learn from and make predictions on data</p>
+                        <p class="fragment">The creation of a model from example inputs in order to make data-driven predictions or decisions</p>
+                        <p class="fragment">Learning from experience either with or without supervision from humans</p>
+                    </section>
+                    <section>
+                        <h2>Uses</h2>
+                        <ul>
+                            <li>Text classification: spam detection</li>
+                            <li>Ranking items: priority inbox</li>
+                            <li>Regression models: predicting page views</li>
+                            <li>Regularization: text regression</li>
+                            <li>Optimization: code breaking</li>
+                            <li>Unsupervised learned: building a stock market index</li>
+                            <li>Spatial similarity: clustering US Senators by the voting records</li>
+                            <li>Recommendation system: suggesting R packages to users</li>
+                            <li>Social network analysis: who to follow on Twitter</li>           
+                        </ul>
+                        <p>Source: Machine Learning for Hackers</p>
+                    </section>
+                    <section>
+                        <h2>Algorithms</h2>
+                        <ul>
+                        <li>Decision Trees</li>
+                        <li>Support Vector Machines</li>
+                        <li>Neural Networks</li>
+                        <li>Genetic Algorithms</li>
+                        <li>Evolutionary Programs</li>
+                        </ul>
+                    </section>
+                                        
+                </section>
                     
+                <section>
+                    <section>
+                        <h2>Genetic Algorithms</h2>
+                        <p>Search for a Solution to a Problem</p>
+                        <p>Stochastic Search Algorithms</p>
+                        <p>Essentially, Reinformence Learning Algorithms: Fitness</p>
+                    </section>
+                    <section>
+                        <h2>Genotype</h2>
+                        <ul>
+                            <li>Represents a solution/individual</li>
+                            <li>Composed by "genes"</li>
+                            <li>Evaluation of Performance</li>
+                            <li>Mutation</li>
+                            <li>Crossover</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Generic Structure</h2>
+                        <img src="images/genetic1.png"/>
+                    </section>
+                    <section data-markdown>
+## Creating and Running Populations
+```js
+for (var k = 0; k < 1000; k++)
+    genotypes.push(Path.createGenotype(/* ... */));
+
+var mutators = [];
+
+for (var k = 0; k < 4; k++)
+    mutators.push(Path.createMutator());
+
+engine = new simplega.Engine({ minimize: true });
+engine.setPopulation(genotypes);
+engine.setMutators(mutators);
+
+//
+
+var newgenotypes = engine.nextPopulation();
+best = simplega.getBestGenotype(newgenotypes, { minimize: true });
+```
+                    </section>
+                    <section>
+                        <h2>Path Sample</h2>
+                        <img src="images/path1.png"/>
+                        <a href="https://github.com/ajlopez/SimpleGA/blob/master/samples/path/path.html">https://github.com/ajlopez/SimpleGA/blob/master/samples/path/path.html</a>
+                    </section>
+                </section>
+
                 <section>
                     <h1>The End</h1>
                     <h3>BY Angel 'Java' Lopez / @ajlopez</h3>
