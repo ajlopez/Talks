@@ -118,7 +118,51 @@
                         <img src="images/backgammon1.jpg"/>
                     </section>
                 </section>
-                    
+                <section>
+                    <section>
+                        <h2>Neural Networks</h2>
+                    </section>
+                    <section>
+                        <h2>Artificial Neuron</h2>
+                        <img src="images/neuron1.png"/>
+                    </section>
+                    <section>
+                        <h2>Many Layers</h2>
+                        <img src="images/neuron2.png"/>
+                    </section>
+                    <section data-markdown>
+## Creating and Training a Network
+```js
+var network = sn.network([6, 10, 3]);
+
+var outputs = network.outputs([0, 0, 1, 1, 0, 0]);
+console.dir(outputs);
+
+for (var k = 0; k < 20; k++) {
+    network.train([0, 0, 1, 1, 0, 0], [0, 1, 0], 0.1);
+    // ....
+}
+```
+                    </section>
+                    <section>
+                        <h2>Digits</h2>
+                        <img src="images/digits1.png"/>
+                        <a href="https://github.com/ajlopez/SimpleNeuron/tree/master/samples/digits">https://github.com/ajlopez/SimpleNeuron/tree/master/samples/digits</a>
+                    </section>
+                    <section>
+                        <h2>ConvNetJS</h2>
+                        <p>Deep Learning in your browser</p>
+                        <a href="http://cs.stanford.edu/people/karpathy/convnetjs/">http://cs.stanford.edu/people/karpathy/convnetjs/</a>
+                        <img src="images/convnetjs1.png"/>
+                        <a href="https://github.com/ajlopez/JavaScriptAI/tree/master/static">https://github.com/ajlopez/JavaScriptAI/tree/master/static</a>
+                    </section>
+                    <section>
+                        <h2>ConvNetJS Cifar10</h2>
+                        <img src="images/convnetjs2.png"/>
+                        <a href="https://github.com/ajlopez/JavaScriptAI/tree/master/static">https://github.com/ajlopez/JavaScriptAI/tree/master/static</a>
+                    </section>
+                </section>
+
                 <section>
                     <section>
                         <h2>Genetic Algorithms</h2>
@@ -167,6 +211,16 @@ best = simplega.getBestGenotype(newgenotypes, { minimize: true });
                         <a href="https://github.com/ajlopez/SimpleGA/blob/master/samples/path/path.html">https://github.com/ajlopez/SimpleGA/blob/master/samples/path/path.html</a>
                     </section>
                 </section>
+                <section>
+                    <section>
+                        <h2>Evolutionary Programs</h2>
+                    </section>
+                    <section>
+                        <h2>Evolving Animals</h2>
+                        <a href="https://github.com/ajlopez/SimpleGA/tree/master/samples/evol">https://github.com/ajlopez/SimpleGA/tree/master/samples/evol</a>
+                        <img src="images/evol1.png"/>
+                    </section>
+                </section>                    
 
                 <section>
                     <h1>The End</h1>
