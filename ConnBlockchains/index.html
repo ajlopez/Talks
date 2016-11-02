@@ -60,6 +60,18 @@
 					<section>
 						<h2>Connecting Blockchains</h2>
 					</section>
+					<section>
+						<h2>Two Blockchains</h2>
+						<img src="images/peg01.png" border="0"/>
+					</section>
+					<section>
+						<h2>Two Way</h2>
+						<img src="images/peg02.png" border="0"/>
+					</section>
+					<section>
+						<h2>Asymmetric</h2>
+						<img src="images/peg03.png" border="0"/>
+					</section>
 				</section>
 				
 				<section>
@@ -79,6 +91,76 @@
 					</section>
 					<section>
 						<h2>Test Driven-Development</h2>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Ethereum/RSK</h2>
+					</section>
+					<section>
+						<h2>Node Network</h2>
+						<img src="images/ethereum01.png" border="0"/>
+					</section>
+					<section>
+						<h2>Miner Node</h2>
+						<img src="images/ethereum02.png" border="0"/>
+						<p>RSK is using merge mining</p>
+					</section>
+                    <section data-markdown>
+## Smart Contracts
+
+Internal Virtual Machine. Many programming languages, ie, Solidity.
+
+```js
+contract SimpleStorage {
+    uint storedData;
+    function set(uint x) {
+        storedData = x;
+    }
+    function get() constant returns (uint retVal) {
+        return storedData;
+    }
+}
+```
+                    </section>
+                    <section data-markdown>
+## A Token Smart Contracts
+
+```js
+contract token { 
+    mapping (address => uint) public coinBalanceOf;
+    event CoinTransfer(address sender, address receiver, uint amount);
+
+  /* Initializes contract with initial supply tokens to the creator of the contract */
+    function token() public {
+        coinBalanceOf[msg.sender] = 10000;
+    }
+
+  /* Very simple trade function */
+    function sendCoin(address receiver, uint amount) returns(bool sufficient) {
+        if (coinBalanceOf[msg.sender] < amount) return false;
+        coinBalanceOf[msg.sender] -= amount;
+        coinBalanceOf[receiver] += amount;
+        CoinTransfer(msg.sender, receiver, amount);
+        return true;
+    }
+}
+```
+                    </section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Transactions</h2>
+					</section>
+					<section>
+						<h2>Bitcoin</h2>
+						<img src="images/tx01.png" border="0"/>
+					</section>
+					<section>
+						<h2>Ethereum/RSK</h2>
+						<img src="images/tx02.png" border="0"/>
 					</section>
 				</section>
 				
