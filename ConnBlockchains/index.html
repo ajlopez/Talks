@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Connecting Blockchains</title>
+
+        <meta name="description" content="Connecting Blockchains">
+        <meta name="author" content="Angel 'Java' Lopez">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Connecting Blockchains</h1>
+                    <h3>Using Two Way Peg</h3>
+                    <p>
+                        By <a href="http://twitter.com/ajlopez">@ajlopez</a>
+						<br/>
+						Member of <a href="http://twitter.com/RSKSmart">@RSKSmart</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/ajlopez/Talks/ConnBlockchains">https://github.com/ajlopez/Talks/ConnBlockchains</a>
+                    </p>
+                    <p>
+                        <small>Using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></small>
+                    </p>
+                </section>
+                
+				<section>
+					<h2>We were so poor :-)</h2>
+					<img src="images/fortran.gif" border="0"/>
+				</section>
+				
+				<section>
+					<section>
+						<h2>Guidelines</h2>
+					</section>
+					<section>
+						<h2>Simplicity</h2>
+					</section>
+					<section>
+						<h2>Use Cases</h2>
+					</section>
+					<section>
+						<h2>Make it work</h2>
+						<h2>Make it right</h2>
+						<h2>Make it fast</h2>
+					</section>
+					<section>
+						<h2>Test Driven-Development</h2>
+					</section>
+					<section>
+						<h2>Resilience</h2>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Connecting Blockchains</h2>
+					</section>
+					<section>
+						<h2>Two Blockchains</h2>
+						<img src="images/peg01.png" border="0"/>
+					</section>
+					<section>
+						<h2>Two Way</h2>
+						<img src="images/peg02.png" border="0"/>
+					</section>
+					<section>
+						<h2>Asymmetric</h2>
+						<img src="images/peg03.png" border="0"/>
+					</section>
+				</section>
+				
+				<section>
+					<section>
+						<h2>Ethereum/RSK</h2>
+					</section>
+					<section>
+						<h2>Node Network</h2>
+						<img src="images/ethereum01.png" border="0"/>
+					</section>
+					<section>
+						<h2>Miner Node</h2>
+						<img src="images/ethereum02.png" border="0"/>
+						<p>RSK is using merge mining</p>
+					</section>
+                    <section data-markdown>
+## Smart Contracts
+
+Internal Virtual Machine. Many programming languages, ie, Solidity.
+
+```js
+contract SimpleStorage {
+    uint storedData;
+    function set(uint x) {
+        storedData = x;
+    }
+    function get() constant returns (uint retVal) {
+        return storedData;
+    }
+}
+```
+                    </section>
+                    <section data-markdown>
+## A Token Smart Contracts
+
+```js
+contract token { 
+    mapping (address => uint) public coinBalanceOf;
+    event CoinTransfer(address sender, address receiver, uint amount);
+
+  /* Initializes contract with initial supply tokens to the creator of the contract */
+    function token() public {
+        coinBalanceOf[msg.sender] = 10000;
+    }
+
+  /* Very simple trade function */
+    function sendCoin(address receiver, uint amount) returns(bool sufficient) {
+        if (coinBalanceOf[msg.sender] < amount) return false;
+        coinBalanceOf[msg.sender] -= amount;
+        coinBalanceOf[receiver] += amount;
+        CoinTransfer(msg.sender, receiver, amount);
+        return true;
+    }
+}
+```
+                    </section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Transactions</h2>
+					</section>
+					<section>
+						<h2>Bitcoin</h2>
+						<img src="images/tx01.png" border="0"/>
+					</section>
+					<section>
+						<h2>Ethereum/RSK</h2>
+						<img src="images/tx02.png" border="0"/>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>From Bitcoin to Ethereum/RSK</h2>
+					</section>
+					<section>
+						<h2>Bitcoin from Ethereum/RSK</h2>
+						<img src="images/btceth.png" border="0"/>
+					</section>
+					<section>
+						<h2>Main Chains</h2>
+						<img src="images/mainchains.png" border="0"/>
+					</section>
+					<section>
+						<h2>Transaction Confirmation</h2>
+						<img src="images/bridge01.png" border="0"/>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>From Ethereum/RSK to Bitcoin</h2>
+					</section>
+					<section>
+						<h2>Generate Bitcoin Transaction</h2>
+						<img src="images/bridge02.png" border="0"/>
+					</section>
+					<section>
+						<h2>Inputs are MultiSig</h2>
+						<img src="images/multisig.png" border="0"/>
+					</section>
+					<section>
+						<h2>Federators</h2>
+						<img src="images/federators.png" border="0"/>
+					</section>
+				</section>
+				
+				<section>
+					<section>
+						<h2>I have a dream...</h2>
+					</section>
+					<section>
+						<h2>Blockchain Mesh</h2>
+						<img src="images/tree.png" border="0"/>
+					</section>
+				</section>
+
+                <section>
+                    <h1>The End</h1>
+                    <h3>BY Angel 'Java' Lopez / @ajlopez</h3>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
