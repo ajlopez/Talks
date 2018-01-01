@@ -40,6 +40,8 @@
                     <h3>Using Two Way Peg</h3>
                     <p>
                         By <a href="http://twitter.com/ajlopez">@ajlopez</a>
+						<br/>
+						Member of <a href="http://twitter.com/RSKSmart">@RSKSmart</a>
                     </p>
                     <p>
                         <a href="https://github.com/ajlopez/Talks/ConnBlockchains">https://github.com/ajlopez/Talks/ConnBlockchains</a>
@@ -49,7 +51,178 @@
                     </p>
                 </section>
                 
+				<section>
+					<h2>We were so poor :-)</h2>
+					<img src="images/fortran.gif" border="0"/>
+				</section>
 				
+				<section>
+					<section>
+						<h2>Guidelines</h2>
+					</section>
+					<section>
+						<h2>Simplicity</h2>
+					</section>
+					<section>
+						<h2>Use Cases</h2>
+					</section>
+					<section>
+						<h2>Make it work</h2>
+						<h2>Make it right</h2>
+						<h2>Make it fast</h2>
+					</section>
+					<section>
+						<h2>Test Driven-Development</h2>
+					</section>
+					<section>
+						<h2>Resilience</h2>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Connecting Blockchains</h2>
+					</section>
+					<section>
+						<h2>Two Blockchains</h2>
+						<img src="images/peg01.png" border="0"/>
+					</section>
+					<section>
+						<h2>Two Way</h2>
+						<img src="images/peg02.png" border="0"/>
+					</section>
+					<section>
+						<h2>Asymmetric</h2>
+						<img src="images/peg03.png" border="0"/>
+					</section>
+				</section>
+				
+				<section>
+					<section>
+						<h2>Ethereum/RSK</h2>
+					</section>
+					<section>
+						<h2>Node Network</h2>
+						<img src="images/ethereum01.png" border="0"/>
+					</section>
+					<section>
+						<h2>Miner Node</h2>
+						<img src="images/ethereum02.png" border="0"/>
+						<p>RSK is using merge mining</p>
+					</section>
+                    <section data-markdown>
+## Smart Contracts
+
+Internal Virtual Machine. Many programming languages, ie, Solidity.
+
+```js
+contract SimpleStorage {
+    uint storedData;
+    function set(uint x) {
+        storedData = x;
+    }
+    function get() constant returns (uint retVal) {
+        return storedData;
+    }
+}
+```
+                    </section>
+                    <section data-markdown>
+## A Token Smart Contracts
+
+```js
+contract token { 
+    mapping (address => uint) public coinBalanceOf;
+    event CoinTransfer(address sender, address receiver, uint amount);
+
+  /* Initializes contract with initial supply tokens to the creator of the contract */
+    function token() public {
+        coinBalanceOf[msg.sender] = 10000;
+    }
+
+  /* Very simple trade function */
+    function sendCoin(address receiver, uint amount) returns(bool sufficient) {
+        if (coinBalanceOf[msg.sender] < amount) return false;
+        coinBalanceOf[msg.sender] -= amount;
+        coinBalanceOf[receiver] += amount;
+        CoinTransfer(msg.sender, receiver, amount);
+        return true;
+    }
+}
+```
+                    </section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Transactions</h2>
+					</section>
+					<section>
+						<h2>Bitcoin</h2>
+						<img src="images/tx01.png" border="0"/>
+					</section>
+					<section>
+						<h2>Ethereum/RSK</h2>
+						<img src="images/tx02.png" border="0"/>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>From Bitcoin to Ethereum/RSK</h2>
+					</section>
+					<section>
+						<h2>Bitcoin from Ethereum/RSK</h2>
+						<img src="images/btceth.png" border="0"/>
+					</section>
+					<section>
+						<h2>Main Chains</h2>
+						<img src="images/mainchains.png" border="0"/>
+					</section>
+					<section>
+						<h2>Transaction Confirmation</h2>
+						<img src="images/bridge01.png" border="0"/>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>From Ethereum/RSK to Bitcoin</h2>
+					</section>
+					<section>
+						<h2>Generate Bitcoin Transaction</h2>
+						<img src="images/bridge02.png" border="0"/>
+					</section>
+					<section>
+						<h2>Inputs are MultiSig</h2>
+						<img src="images/multisig.png" border="0"/>
+					</section>
+					<section>
+						<h2>Federators</h2>
+						<img src="images/federators.png" border="0"/>
+					</section>
+				</section>
+				
+				<section>
+					<section>
+						<h2>I have a dream...</h2>
+					</section>
+					<section>
+						<h2>Blockchain Mesh</h2>
+						<img src="images/tree.png" border="0"/>
+					</section>
+				</section>
+
+				<section>
+                    <h1>References</h1>
+					<ul>
+						<li><a href="https://blockstream.com/sidechains.pdf">Enabling Blockchain Innovations with Pegged Sidechains - Blockstream</a></li>
+						<li><a href="https://gendal.me/2014/10/26/a-simple-explanation-of-bitcoin-sidechains/">A simple explanation of Bitcoin "sidechains"</a></li>
+						<li><a href="http://www.rsk.co/blog/sidechains-drivechains-and-rsk-2-way-peg-design">Sidechains, Drivechains, and RSK 2-Way peg Design</a></li>
+						<li><a href="https://www.youtube.com/watch?v=g9_MakNlHDA">Sidechains Explained (Litecoin/Bitcoin)</a></li>
+					</ul>
+                </section>
+
                 <section>
                     <h1>The End</h1>
                     <h3>BY Angel 'Java' Lopez / @ajlopez</h3>
